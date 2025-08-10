@@ -178,12 +178,16 @@ hand_drawn_svg <- function(x, width = 6, height = 4, dpi = 300,
   g_text   <- .strip_grob(g, keep = "text")
 
   # shapes: SVG warp
-  img_shapes <- .warp_svg_shapes(g_shapes, width, height, dpi, scale, freq, seed)
+  img_shapes <- with_showtext_auto({
+    .warp_svg_shapes(g_shapes, width, height, dpi, scale, freq, seed)
+  })
 
   # text: always via ragg; optionally warp with the same-style displacement
   img_text <- .render_ragg(g_text, width, height, dpi)
   if (isTRUE(affect_text)) {
-    img_text <- .warp_raster_with_svg(img_text, width, height, dpi, scale, freq, seed)
+    img_text <- with_showtext_auto({
+      .warp_raster_with_svg(img_text, width, height, dpi, scale, freq, seed)
+    }) 
   }
 
   out <- magick::image_composite(img_shapes, img_text, operator = "over")
