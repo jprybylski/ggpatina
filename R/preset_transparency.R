@@ -1,55 +1,122 @@
-
 #' Transparency slide preset (chromatic offset, light leak, vignette, grain)
+#'
 #' @param img magick image
-#' @param leak_strength 0..1
-#' @param vignette 0..1
-#' @param skew Keystone factor (0..~0.03)
-#' @param grain 0..1
+#' @param ca_px integer pixel shift for R/B channels (chromatic aberration)
+#' @param leak_strength 0..1 intensity of light leak
+#' @param leak_pos one of "nw","ne","sw","se","center"
+#' @param vignette 0..1 darkness at edges
+#' @param vignette_feather 0.3..3 falloff softness (higher = softer)
+#' @param skew keystone factor (0..~0.02)
+#' @param grain 0..1 film grain strength
 #' @export
-slideify_transparency <- function(img, leak_strength = 0.25, vignette = 0.35, skew = 0.015, grain = 0.8) {
+slideify_transparency <- function(img,
+                                  ca_px = 1L,
+                                  leak_strength = 0.18,
+                                  leak_pos = c("ne","nw","se","sw","center"),
+                                  vignette = 0.22,
+                                  vignette_feather = 1.6,
+                                  skew = 0.008,
+                                  grain = 0.35) {
   stopifnot(inherits(img, "magick-image"))
+  leak_pos <- match.arg(leak_pos)
   out <- img
 
-  # Mild fade & warmth
-  out <- magick::image_modulate(out, brightness = 98, saturation = 90)
-  out <- magick::image_colorize(out, opacity = 6, color = "orange")
+  # Gentle warmth & tiny lift (keep legible)
+  out <- magick::image_modulate(out, brightness = 102, saturation = 104)
+  out <- magick::image_colorize(out, opacity = 5, color = "#ff9a00")
 
-  # Chromatic aberration via channel roll
-  ch <- magick::image_separate(out, "RGB")
-  r <- magick::image_roll(ch[[1]], 2, 0)
-  g <- ch[[2]]
-  b <- magick::image_roll(ch[[3]], -2, 0)
+  # Chromatic aberration via channel roll (very small by default)
+  r <- magick::image_channel(out, "red")
+  g <- magick::image_channel(out, "green")
+  b <- magick::image_channel(out, "blue")
+  if (ca_px != 0) {
+    r <- .im_roll(r,  abs(ca_px), 0)
+    b <- .im_roll(b, -abs(ca_px), 0)
+  }
   out <- magick::image_combine(c(r, g, b), colorspace = "sRGB")
 
-  # Perspective keystone
-  wh <- img_wh(out); w <- wh['w']; h <- wh['h']
-  dx <- round(w * skew)
-  pts <- c(
-    0,0,      dx,0,
-    w,0,      w-dx,0,
-    0,h,      0,h,
-    w,h,      w,h
-  )
-  out <- magick::image_distort(out, method = "Perspective", points = pts)
+  # Perspective keystone (subtle)
+  wh <- img_wh(out); w <- wh["w"]; h <- wh["h"]
+  if (skew != 0) {
+    dx <- round(w * skew)
+    pts <- c(
+      0,0,    dx,0,
+      w,0,    w - dx,0,
+      0,h,    0,h,
+      w,h,    w,h
+    )
+    out <- magick::image_distort(out, distortion = "perspective", coordinates  = pts)
+    wh <- img_wh(out); w <- wh["w"]; h <- wh["h"]
+  }
 
-  # Light leak
-  leak <- magick::image_read("radial-gradient:#ffcc88-#000000")
-  leak <- magick::image_resize(leak, paste0(w, "x", h, "!"))
-  leak <- magick::image_modulate(leak, brightness = 150, saturation = 200)
-  leak <- magick::image_colorize(leak, opacity = 25, color = "orange")
-  leak <- set_alpha(leak, leak_strength)
-  out  <- magick::image_composite(out, leak, operator = "screen")
+  # Light leak (small, warm, positionable)
+  if (leak_strength > 0) {
+    leak <- magick::image_read("radial-gradient:#ffd8aa-#000000")
+    leak <- magick::image_resize(leak, sprintf("%dx%d!", w, h))
+    leak <- magick::image_modulate(leak, brightness = 145, saturation = 180)
+    leak <- magick::image_colorize(leak, opacity = 18, color = "#ff8a00")
+    leak <- set_alpha(leak, leak_strength)
+    grav <- switch(leak_pos, ne="northeast", nw="northwest", se="southeast", sw="southwest", center="center")
+    # build protection mask from the (pre-leak) base
+    g        <- magick::image_convert(out, colorspace = "gray")
+    ink      <- magick::image_negate(g)                    # dark -> bright
+    ink      <- magick::image_blur(ink, 0, 1.5)
+    protect  <- magick::image_fx(ink, "u*0.7")             # 0..1, tune strength
+    # attenuate leak alpha by (1 - protect)
+    a        <- magick::image_channel(leak, "alpha")
+    atten    <- magick::image_composite(
+                  magick::image_negate(protect), a, operator = "multiply"
+                )
+    leak     <- magick::image_composite(leak, atten, operator = "copy_opacity")
+    # then composite (screen or blend)
+    out <- magick::image_composite(out, leak, operator = "screen", gravity = grav)
+  }
 
-  # Vignette
-  vign <- magick::image_read("radial-gradient:black-transparent")
-  vign <- magick::image_resize(vign, paste0(w, "x", h, "!"))
-  vign <- set_alpha(vign, vignette)
-  out  <- magick::image_composite(out, vign, operator = "multiply")
+  # Vignette (feathered; multiply darkens edges while keeping mids)
+  if (vignette > 0) {
+    vig <- magick::image_read("radial-gradient:rgba(0,0,0,0)-black")
+    vig <- magick::image_resize(vig, sprintf("%dx%d!", w, h))
+    # soften/feather the alpha falloff
+    vig <- magick::image_fx(vig, sprintf("u^%g", vignette_feather), channel = "alpha")
+    vig <- set_alpha(vig, vignette)
+    out <- magick::image_composite(out, vig, operator = "multiply")
+  }
 
-  # Grain & slight blur
-  out <- magick::image_noise(out, "gaussian")
-  out <- magick::image_blur(out, radius = 0, sigma = 0.6)
-  if (grain > 0) out <- magick::image_contrast(out, sharpen = TRUE)
+  # Film grain (soft-light so it doesn’t crush tones)
+  if (grain > 0) {
+    base  <- magick::image_blank(w, h, "gray50")
+    noise <- magick::image_noise(base, "gaussian")
+    noise <- magick::image_blur(noise, 0, 0.6)
+    noise <- set_alpha(noise, grain * 0.6)
+    out   <- magick::image_composite(out, noise, operator = "soft_light")
+  }
+
+  # Tiny lens softness + micro contrast for readability
+  out <- magick::image_blur(out, 0, 0.35)
+  out <- magick::image_contrast(out, sharpen = TRUE)
 
   out
+}
+
+
+
+
+# roll/shift with wrap-around (dx>0 => right, dy>0 => down)
+.im_roll <- function(im, dx = 0, dy = 0) {
+  info <- magick::image_info(im)[1, ]; w <- info$width; h <- info$height
+  # horizontal
+  s <- ((dx %% w) + w) %% w
+  if (s > 0) {
+    right <- magick::image_crop(im, sprintf("%dx%d+%d+0", w - s, h, s))
+    left  <- magick::image_crop(im, sprintf("%dx%d+0+0",  s,     h))
+    im <- magick::image_append(c(right, left), stack = FALSE)
+  }
+  # vertical
+  s <- ((dy %% h) + h) %% h
+  if (s > 0) {
+    lower <- magick::image_crop(im, sprintf("%dx%d+0+%d", w, h - s, s))
+    upper <- magick::image_crop(im, sprintf("%dx%d+0+0", w, s))
+    im <- magick::image_append(c(lower, upper), stack = TRUE)
+  }
+  im
 }
