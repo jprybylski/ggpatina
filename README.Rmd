@@ -37,10 +37,10 @@ pak::pak("jprybylski/ggpatina")
 
 ## What this package tries to do
 
--   **Period vibes, minimal hassle.** One-liners to get “old newspaper”, “1970s transparency slide”, “1980s newscast/CRT”, or “educational film” looks.
+-   **Old-school vibes, minimal hassle.** One-liners to get “old newspaper”, “1970s transparency slide”, “1980s newscast/CRT”, or “educational film” looks.
 -   **Post-processing, not plotting.** You keep your ggplot; patinas work on a `magick-image` of the rendered plot.
 -   **Fonts without global side-effects.** Swap to period-appropriate families (e.g., IM FELL, Crimson Pro) *in place* via `apply_period_fonts()` (uses `showtext` safely).
--   **Panel-aware wobble.** Hand-drawn SVG/raster wobble that can target just the data panel (axes included) so titles and margins stay crisp.
+-   **Panel-aware wobble.** Hand-drawn raster wobble that can target just the data panel (axes included) so titles and margins stay crisp.
 -   **Print-friendly themes.** A few restrained “journal” themes that don’t fight your sizes.
 
 ## Quick start
