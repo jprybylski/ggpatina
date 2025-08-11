@@ -1,0 +1,20 @@
+test_that("theme functions return theme objects", {
+  skip_if_not_installed("ggplot2")
+  expect_s3_class(theme_newspaper(), "theme")
+  expect_s3_class(theme_newscast(), "theme")
+  expect_s3_class(theme_edu_film(), "theme")
+  expect_s3_class(theme_transparency(), "theme")
+  expect_s3_class(theme_blueprint(), "theme")
+  expect_s3_class(theme_journal_core(), "theme")
+  expect_s3_class(theme_journal_1900s(), "theme")
+  expect_s3_class(theme_journal_1930s(), "theme")
+  expect_s3_class(theme_journal_1960s(), "theme")
+})
+
+test_that("scale functions return scale objects", {
+  skip_if_not_installed("ggplot2")
+  expect_s3_class(scale_color_journal(), "ScaleDiscrete")
+  expect_s3_class(scale_fill_journal(), "ScaleDiscrete")
+  expect_s3_class(scale_color_journal_continuous(), "ScaleContinuous")
+  expect_s3_class(scale_fill_journal_continuous(), "ScaleContinuous")
+})
