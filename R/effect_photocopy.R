@@ -1,3 +1,7 @@
+#' Internal helper applying a sigmoid contrast curve
+#'
+#' @keywords internal
+#' @noRd
 .sigmoid_contrast <- function(img, contrast = 6, midpoint = 0.5, sharpen = TRUE) {
   s  <- if (sharpen) contrast else -contrast
   L0 <- 1/(1 + exp(-s * (0 - midpoint)))

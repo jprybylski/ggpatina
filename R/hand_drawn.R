@@ -1,5 +1,7 @@
 # ========= utilities =========================================================
 # Soft rectangular mask from pixel coords
+#' @keywords internal
+#' @noRd
 rect_mask_px <- function(w, h, left, top, right, bottom, feather = 8) {
   left <- max(0L, round(left)); top <- max(0L, round(top))
   right <- min(w, round(right)); bottom <- min(h, round(bottom))
@@ -11,7 +13,10 @@ rect_mask_px <- function(w, h, left, top, right, bottom, feather = 8) {
   m
 }
 
-# Fade warp near frame edges (prevents “fake margins”)
+#' Fade warp near frame edges (prevents “fake margins”)
+#'
+#' @keywords internal
+#' @noRd
 edge_guard_mask <- function(w, h, guard_frac = 0.03, feather = 3) {
   pad <- max(1L, round(min(w, h) * guard_frac))
   rect_mask_px(w, h, pad, pad, w - pad, h - pad, feather)
@@ -34,6 +39,7 @@ edge_guard_mask <- function(w, h, guard_frac = 0.03, feather = 3) {
 #' @param return_bbox Logical; if TRUE, returns a list with `mask` and `bbox`
 #'   (useful for caching or visual debug). Default FALSE returns just the mask.
 #' @return A `magick-image` mask (white = inside, black = outside); or a list if `return_bbox=TRUE`.
+#' @keywords internal
 panel_mask_from_plot <- function(
   p, width, height, dpi,
   feather      = 10,
@@ -111,6 +117,8 @@ panel_mask_from_plot <- function(
 
 
 # ---- image-only fallback (no ggplot object) ---------------------------------
+#' @keywords internal
+#' @noRd
 auto_panel_mask_img <- function(img, feather = 10, expand_frac = c(0.015, 0.025), work_w = 520) {
   wh <- img_wh(img); w <- wh["w"]; h <- wh["h"]
   g  <- magick::image_convert(img, colorspace = "gray")
@@ -146,6 +154,8 @@ auto_panel_mask_img <- function(img, feather = 10, expand_frac = c(0.015, 0.025)
 
 
 # ====== auto scale ==========================================================
+#' @keywords internal
+#' @noRd
 calc_auto_scale <- function(w, h, dpi, freq, strength = 0.7) {
   px_min   <- min(w, h)
   px_ref   <- 30        # reference canvas (px)
@@ -159,6 +169,8 @@ calc_auto_scale <- function(w, h, dpi, freq, strength = 0.7) {
 }
 
 # ====== displacement map & filter ===========================================
+#' @keywords internal
+#' @noRd
 displace_map <- function(w, h, freq = 0.6, seed = 3, gate = NULL, edge_guard = 0.03) {
   neutral <- magick::image_blank(w, h, "gray50")
   set.seed(as.integer(seed) %% .Machine$integer.max)
