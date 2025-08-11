@@ -94,11 +94,7 @@ img_slide <- slideify_transparency(
 image_write(img_slide, path = "man/figures/slide.png", format = "png")
 ```
 
-<<<<<<< HEAD
 ![](man/figures/slide.png)
-=======
-![](man/figures/slide.gif)
->>>>>>> 61ec0ef7b793166ad3e32a215643bf19b6940b0c
 
 ``` r
 # ---------- 2) Old newscast / CRT ----------
@@ -114,11 +110,7 @@ img_crt <- patina_newscast(
 image_write(img_crt, path = "man/figures/crt.png", format = "png")
 ```
 
-<<<<<<< HEAD
 ![](man/figures/crt.png)
-=======
-![](man/figures/crt.gif)
->>>>>>> 61ec0ef7b793166ad3e32a215643bf19b6940b0c
 
 ``` r
 # ---------- 3) Photocopy ----------
@@ -132,11 +124,7 @@ img_copy <- patina_photocopy(
 image_write(img_copy, path = "man/figures/photocopy.png", format = "png")
 ```
 
-<<<<<<< HEAD
 ![](man/figures/photocopy.png)
-=======
-![](man/figures/photocopy.gif)
->>>>>>> 61ec0ef7b793166ad3e32a215643bf19b6940b0c
 
 ``` r
 # ---------- 4) Educational film (animated GIF) ----------
@@ -164,7 +152,6 @@ image_write(img_film, path = "man/figures/film.gif", format = "gif")
 ``` r
 p <- ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) + geom_point()
 p + theme_newspaper()
-<<<<<<< HEAD
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
@@ -181,18 +168,11 @@ p + theme_newscast()
 
 <img src="man/figures/README-unnamed-chunk-8-3.png" width="100%" />
 
-=======
-p + theme_edu_film()
-p + theme_newscast()
-```
-
->>>>>>> 61ec0ef7b793166ad3e32a215643bf19b6940b0c
 ## Journal-flavored themes
 
 ``` r
 p <- ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) + geom_point()
 p + theme_journal_1900s()
-<<<<<<< HEAD
 ```
 
 <img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
@@ -209,12 +189,6 @@ p + theme_journal_1960s()
 
 <img src="man/figures/README-unnamed-chunk-9-3.png" width="100%" />
 
-=======
-p + theme_journal_1930s()
-p + theme_journal_1960s()
-```
-
->>>>>>> 61ec0ef7b793166ad3e32a215643bf19b6940b0c
 ## Contributing
 
 Issues and PRs welcome—especially new patina presets with small,

@@ -99,11 +99,7 @@ img_slide <- slideify_transparency(
 image_write(img_slide, path = "man/figures/slide.png", format = "png")
 ```
 
-<<<<<<< HEAD
 ![](man/figures/slide.png)
-=======
-![](man/figures/slide.gif)
->>>>>>> 61ec0ef7b793166ad3e32a215643bf19b6940b0c
 
 ```{r eval=FALSE}
 # ---------- 2) Old newscast / CRT ----------
@@ -120,11 +116,7 @@ image_write(img_crt, path = "man/figures/crt.png", format = "png")
 
 ```
 
-<<<<<<< HEAD
 ![](man/figures/crt.png)
-=======
-![](man/figures/crt.gif)
->>>>>>> 61ec0ef7b793166ad3e32a215643bf19b6940b0c
 
 ```{r eval=FALSE}
 # ---------- 3) Photocopy ----------
@@ -139,11 +131,7 @@ image_write(img_copy, path = "man/figures/photocopy.png", format = "png")
 
 ```
 
-<<<<<<< HEAD
 ![](man/figures/photocopy.png)
-=======
-![](man/figures/photocopy.gif)
->>>>>>> 61ec0ef7b793166ad3e32a215643bf19b6940b0c
 
 ```{r eval=FALSE}
 # ---------- 4) Educational film (animated GIF) ----------
@@ -168,11 +156,7 @@ image_write(img_film, path = "man/figures/film.gif", format = "gif")
 
 ## Complementary themes
 
-<<<<<<< HEAD
 ```{r}
-=======
-```{r eval=FALSE}
->>>>>>> 61ec0ef7b793166ad3e32a215643bf19b6940b0c
 p <- ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) + geom_point()
 p + theme_newspaper()
 p + theme_edu_film()
@@ -181,11 +165,7 @@ p + theme_newscast()
 
 ## Journal-flavored themes
 
-<<<<<<< HEAD
 ```{r}
-=======
-```{r eval=FALSE}
->>>>>>> 61ec0ef7b793166ad3e32a215643bf19b6940b0c
 p <- ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) + geom_point()
 p + theme_journal_1900s()
 p + theme_journal_1930s()
