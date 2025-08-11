@@ -1,5 +1,19 @@
+---
+output:
+  rmarkdown::github_document:
+    html_preview: FALSE
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
 
 # ggpatina
 
@@ -7,41 +21,31 @@
 
 <!-- badges: end -->
 
-Make **ggplot2** figures look like they were scanned, photocopied,
-projected from old slides, or captured off a CRT—without losing the
-plot.  
-This package adds lightweight, composable *patina* filters (on
-**magick** images), a tiny set of **journal-era themes**, and a
-**panel-aware hand-drawn wobble** for that “annotated by a human” vibe.
+Make **ggplot2** figures look like they were scanned, photocopied, projected from old slides, or captured off a CRT—without losing the plot.\
+This package adds lightweight, composable *patina* filters (on **magick** images), a tiny set of **journal-era themes**, and a **panel-aware hand-drawn wobble** for that “annotated by a human” vibe.
 
 > Built as a vibe-coding project with ChatGPT (GPT-5 Thinking).
 
 ## Installation
 
-``` r
+```{r, eval=FALSE}
 # install.packages("ggpatina")
 
 pak::pak("jprybylski/ggpatina")
+
 ```
 
 ## What this package tries to do
 
-- **Period vibes, minimal hassle.** One-liners to get “old newspaper”,
-  “1970s transparency slide”, “1980s newscast/CRT”, or “educational
-  film” looks.
-- **Post-processing, not plotting.** You keep your ggplot; patinas work
-  on a `magick-image` of the rendered plot.
-- **Fonts without global side-effects.** Swap to period-appropriate
-  families (e.g., IM FELL, Crimson Pro) *in place* via
-  `apply_period_fonts()` (uses `showtext` safely).
-- **Panel-aware wobble.** Hand-drawn SVG/raster wobble that can target
-  just the data panel (axes included) so titles and margins stay crisp.
-- **Print-friendly themes.** A few restrained “journal” themes that
-  don’t fight your sizes.
+-   **Period vibes, minimal hassle.** One-liners to get “old newspaper”, “1970s transparency slide”, “1980s newscast/CRT”, or “educational film” looks.
+-   **Post-processing, not plotting.** You keep your ggplot; patinas work on a `magick-image` of the rendered plot.
+-   **Fonts without global side-effects.** Swap to period-appropriate families (e.g., IM FELL, Crimson Pro) *in place* via `apply_period_fonts()` (uses `showtext` safely).
+-   **Panel-aware wobble.** Hand-drawn SVG/raster wobble that can target just the data panel (axes included) so titles and margins stay crisp.
+-   **Print-friendly themes.** A few restrained “journal” themes that don’t fight your sizes.
 
 ## Quick start
 
-``` r
+```{r eval=FALSE}
 library(ggplot2)
 library(magick)
 # library(ggpatina)
@@ -74,13 +78,14 @@ img_scan <- scanify_journal(
 )
 
 image_write(img_scan, path = "man/figures/scanify_journal.png", format = "png")
+
 ```
 
 ![](man/figures/scanify_journal.png)
 
 ## More looks (grab-and-go)
 
-``` r
+```{r eval=FALSE}
 # ---------- 1) Transparency slide (Kodachrome-ish transparency) ----------
 # Slight keystone + gentle vignette; keep the leak modest so plot stays readable
 img_slide <- slideify_transparency(
@@ -96,7 +101,7 @@ image_write(img_slide, path = "man/figures/slide.png", format = "png")
 
 ![](man/figures/slide.png)
 
-``` r
+```{r eval=FALSE}
 # ---------- 2) Old newscast / CRT ----------
 # Pick scanline period from image height so it stays visible but not overbearing
 img_crt <- patina_newscast(
@@ -108,11 +113,12 @@ img_crt <- patina_newscast(
   noise         = 0.28
 )
 image_write(img_crt, path = "man/figures/crt.png", format = "png")
+
 ```
 
 ![](man/figures/crt.png)
 
-``` r
+```{r eval=FALSE}
 # ---------- 3) Photocopy ----------
 img_copy <- patina_photocopy(
   img_wobble,
@@ -122,11 +128,12 @@ img_copy <- patina_photocopy(
   protect_lines = 0.85
 )
 image_write(img_copy, path = "man/figures/photocopy.png", format = "png")
+
 ```
 
 ![](man/figures/photocopy.png)
 
-``` r
+```{r eval=FALSE}
 # ---------- 4) Educational film (animated GIF) ----------
 # A short loop with mild gate weave; pass film params via ... to your patina
 img_film <- animate_edu_film(
@@ -149,47 +156,22 @@ image_write(img_film, path = "man/figures/film.gif", format = "gif")
 
 ## Complementary themes
 
-``` r
+```{r}
 p <- ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) + geom_point()
 p + theme_newspaper()
-```
-
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
-
-``` r
 p + theme_edu_film()
-```
-
-<img src="man/figures/README-unnamed-chunk-8-2.png" width="100%" />
-
-``` r
 p + theme_newscast()
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-3.png" width="100%" />
-
 ## Journal-flavored themes
 
-``` r
+```{r}
 p <- ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) + geom_point()
 p + theme_journal_1900s()
-```
-
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
-
-``` r
 p + theme_journal_1930s()
-```
-
-<img src="man/figures/README-unnamed-chunk-9-2.png" width="100%" />
-
-``` r
 p + theme_journal_1960s()
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-3.png" width="100%" />
-
 ## Contributing
 
-Issues and PRs welcome—especially new patina presets with small,
-readable defaults.
+Issues and PRs welcome—especially new patina presets with small, readable defaults.

@@ -2,55 +2,50 @@
 % Please edit documentation in R/hand_drawn.R
 \name{hand_drawn_wiggle}
 \alias{hand_drawn_wiggle}
-\title{Hand-drawn wobble (raster post-processing)}
+\title{Hand-drawn wobble (post-processing; auto scale; exact panel mask for ggplot)}
 \usage{
 hand_drawn_wiggle(
   x,
   width = 6,
   height = 4,
   dpi = 300,
-  scale = 2,
+  scale = "auto",
+  strength = 0.7,
   freq = 0.6,
   seed = 3,
   affect_text = TRUE,
-  focus = c("auto_panel", "full", "panel_rect"),
-  panel_rect = NULL,
-  mask = NULL,
-  edge_guard = 0.04,
+  focus = c("panel", "full", "auto_image"),
+  expand_px = c(6L, 6L),
+  edge_guard = 0.03,
   fill_bg = NULL
 )
 }
 \arguments{
-\item{x}{ggplot, grob, or \code{magick-image}}
+\item{x}{ggplot/grob or magick-image}
 
-\item{width, height}{inches (used if \code{x} is ggplot/grob)}
+\item{width, height, dpi}{Used when x is ggplot/grob}
 
-\item{dpi}{output resolution (pixels = width\emph{dpi × height}dpi)}
+\item{scale}{numeric px or "auto" (default)}
 
-\item{scale}{displacement amplitude in pixels (≈ 1–4)}
+\item{strength}{0..1 intensity when \code{scale="auto"} (default 0.7)}
 
-\item{freq}{noise frequency control (lower = broader waves)}
+\item{freq}{noise frequency (0.2 broad … 1.2 fine)}
 
-\item{seed}{integer RNG seed for reproducible fields}
+\item{seed}{RNG seed}
 
-\item{affect_text}{logical; if \code{FALSE}, tries to limit wobble to panel area}
+\item{affect_text}{if FALSE, confine warp to panel region}
 
-\item{focus}{one of \code{"auto_panel"} (default), \code{"full"}, or \code{"panel_rect"}}
+\item{focus}{"panel" (default if ggplot), "full", or "auto_image"}
 
-\item{panel_rect}{optional normalized bbox c(xmin,ymin,xmax,ymax) if \code{focus="panel_rect"}}
+\item{expand_px}{integer px to expand the panel box (ggplot path)}
 
-\item{mask}{optional magick single-channel mask (white = affected)}
+\item{edge_guard}{fade warp near canvas edges (0..0.2)}
 
-\item{edge_guard}{0..0.2 fraction to fade warp near frame edges}
-
-\item{fill_bg}{optional background color for flattening (e.g. "white")}
+\item{fill_bg}{final background (e.g., "white" or "transparent")}
 }
 \value{
-\code{magick-image} of exact size
+magick-image
 }
 \description{
-Produces a hand-drawn "wiggle" by displacing pixels with a noise field.
-Works entirely in the raster domain (no SVG), preserves exact dimensions,
-and can optionally focus the warp inside the plot panel when
-\code{affect_text = FALSE}.
+Hand-drawn wobble (post-processing; auto scale; exact panel mask for ggplot)
 }
