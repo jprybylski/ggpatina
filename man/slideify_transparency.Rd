@@ -6,22 +6,31 @@
 \usage{
 slideify_transparency(
   img,
-  leak_strength = 0.25,
-  vignette = 0.35,
-  skew = 0.015,
-  grain = 0.8
+  ca_px = 1L,
+  leak_strength = 0.18,
+  leak_pos = c("ne", "nw", "se", "sw", "center"),
+  vignette = 0.22,
+  vignette_feather = 1.6,
+  skew = 0.008,
+  grain = 0.35
 )
 }
 \arguments{
 \item{img}{magick image}
 
-\item{leak_strength}{0..1}
+\item{ca_px}{integer pixel shift for R/B channels (chromatic aberration)}
 
-\item{vignette}{0..1}
+\item{leak_strength}{0..1 intensity of light leak}
 
-\item{skew}{Keystone factor (0..~0.03)}
+\item{leak_pos}{one of "nw","ne","sw","se","center"}
 
-\item{grain}{0..1}
+\item{vignette}{0..1 darkness at edges}
+
+\item{vignette_feather}{0.3..3 falloff softness (higher = softer)}
+
+\item{skew}{keystone factor (0..~0.02)}
+
+\item{grain}{0..1 film grain strength}
 }
 \description{
 Transparency slide preset (chromatic offset, light leak, vignette, grain)

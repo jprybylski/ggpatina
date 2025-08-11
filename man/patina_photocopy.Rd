@@ -2,27 +2,39 @@
 % Please edit documentation in R/effect_photocopy.R
 \name{patina_photocopy}
 \alias{patina_photocopy}
-\title{Photocopier double-pass misalignment (ghost + banding)}
+\title{Photocopier double-pass misalignment (ghost + banding, line-safe, adjustable wash)}
 \usage{
 patina_photocopy(
   img,
   offset = c(3, -2),
-  ghost_opacity = 0.35,
+  ghost_opacity = 0.12,
   banding = 0.12,
-  tilt_deg = 0.4
+  tilt_deg = 0.4,
+  protect_lines = 0.75,
+  wash = 0.25,
+  line_gain = 0.18,
+  contrast_pop = 6
 )
 }
 \arguments{
-\item{img}{magick image.}
+\item{img}{magick image}
 
-\item{offset}{length-2 integer vector (x,y) ghost offset in pixels.}
+\item{offset}{c(x,y) ghost offset in px}
 
-\item{ghost_opacity}{0..1 opacity of ghost pass.}
+\item{ghost_opacity}{0..1 opacity of the ghost pass}
 
-\item{banding}{0..1 banding intensity.}
+\item{banding}{0..1 banding strength}
 
-\item{tilt_deg}{small rotation in degrees to mimic deskew.}
+\item{tilt_deg}{rotate (deskew) degrees}
+
+\item{protect_lines}{0..1 how strongly to protect dark strokes (1 = max)}
+
+\item{wash}{0..1 how much to lift paper/background (0 = none, 1 = strong)}
+
+\item{line_gain}{0..1 re-ink amount applied after effects (0 = none)}
+
+\item{contrast_pop}{strength of final sigmoid contrast (0 = none)}
 }
 \description{
-Photocopier double-pass misalignment (ghost + banding)
+Photocopier double-pass misalignment (ghost + banding, line-safe, adjustable wash)
 }

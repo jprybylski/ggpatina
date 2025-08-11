@@ -7,15 +7,15 @@
 patina_kodachrome(img, warmth = 0.25, fade = 0.25, bloom = 0.35, grain = 0.6)
 }
 \arguments{
-\item{img}{magick image.}
+\item{img}{magick image (rasterized plot).}
 
 \item{warmth}{0..1 warm colorize.}
 
-\item{fade}{0..1 highlight lift.}
+\item{fade}{0..1 slight highlight lift.}
 
-\item{bloom}{0..1 halation glow strength.}
+\item{bloom}{0..1 halation glow strength (around strokes).}
 
-\item{grain}{0..1 grain amount (qualitative).}
+\item{grain}{0..1 grain amount.}
 }
 \description{
 Faded, overexposed Kodachrome vibe (warm cast + halation + grain)

@@ -2,21 +2,44 @@
 % Please edit documentation in R/preset_journal_scan.R
 \name{scanify_journal}
 \alias{scanify_journal}
-\title{Old journal scan preset (sepia/mono, halftone, paper texture, scanner shadow)}
+\title{Old journal scan (sepia/mono, soft dither, paper, rotating top shadow)
+Shadow is drawn in a top margin first, then the whole page is rotated.}
 \usage{
-scanify_journal(img, paper = NULL, sepia = TRUE, dither = TRUE, tilt_deg = 0.6)
+scanify_journal(
+  img,
+  paper = NULL,
+  sepia = TRUE,
+  dither = TRUE,
+  dither_strength = 0.3,
+  tilt_deg = 0.6,
+  rotate_bg = "white",
+  pad_top_px = NULL,
+  shadow_strength = 0.35,
+  saturation = 10
+)
 }
 \arguments{
 \item{img}{magick image}
 
-\item{paper}{optional path to paper texture}
+\item{paper}{optional path/URL to paper texture}
 
 \item{sepia}{logical}
 
 \item{dither}{logical}
 
-\item{tilt_deg}{small rotation}
+\item{dither_strength}{0..1 blend amount (softer texture than full dither)}
+
+\item{tilt_deg}{degrees to rotate the page (small skew)}
+
+\item{rotate_bg}{background color used when flattening after rotate}
+
+\item{pad_top_px}{top margin in pixels (NULL = ~2\% of height)}
+
+\item{shadow_strength}{0..1 peak opacity at the very top of the margin}
+
+\item{saturation}{If not sepia toned, color saturation}
 }
 \description{
-Old journal scan preset (sepia/mono, halftone, paper texture, scanner shadow)
+Old journal scan (sepia/mono, soft dither, paper, rotating top shadow)
+Shadow is drawn in a top margin first, then the whole page is rotated.
 }

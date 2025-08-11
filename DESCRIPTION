@@ -18,7 +18,8 @@ Imports:
     gtable,
     magick,
     ragg,
-    grDevices
+    grDevices,
+    rlang
 Suggests:
     systemfonts,
     sysfonts,
