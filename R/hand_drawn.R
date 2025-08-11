@@ -214,7 +214,6 @@ hand_drawn_wiggle <- function(
   if (is.character(scale) && tolower(scale) == "auto") {
     scale <- calc_auto_scale(w, h, dpi, freq, strength = strength)
   }
-  print(scale)
 
   gate <- NULL
   if (!affect_text) {
