@@ -153,17 +153,36 @@ with_showtext_auto <- function(expr) {
   force(expr)
 }
 
-#' Print / save helpers that scope showtext to this call only
+# ---- Scoped showtext wrappers (no global state left behind) ------------------
+
+# Enables showtext_auto just for this call, then turns it off.
+# If the user already had auto=TRUE globally, this will disable it afterwards.
 #'
-#' @param plot `ggplot` Plot object
-#' @param filename Name passed to ggsave
-#' @param ... Passed to ggsave
-#' @rdname print_save
+#' @keywords internal
+#' @noRd
+with_showtext_auto <- function(expr) {
+  if (!requireNamespace("showtext", quietly = TRUE))
+    stop("Please install 'showtext'.")
+  withr::defer(showtext::showtext_auto(FALSE), parent.frame())
+  showtext::showtext_auto(TRUE)
+  force(expr)
+}
+
+#' Print a ggplot using showtext without affecting global state
+#'
+#' Scopes `showtext::showtext_auto()` to this call only so that font rendering
+#' is enabled for the duration of the print and then restored.
+#'
+#' @param p A ggplot object to print.
 #' @export
-print_st <- function(plot) with_showtext_auto(print(plot))
+print_st <- function(p) with_showtext_auto(print(p))
 
-
-#' @rdname print_save
+#' Save a ggplot with showtext enabled temporarily
+#'
+#' Wraps [ggplot2::ggsave()] while activating showtext only for this call,
+#' ensuring font rendering without leaving global side effects.
+#'
+#' @inheritParams ggplot2::ggsave
 #' @export
 ggsave_st <- function(filename, plot, ...) with_showtext_auto(
   ggplot2::ggsave(filename = filename, plot = plot, ...)
