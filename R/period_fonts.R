@@ -1,5 +1,8 @@
 
-# one place for element -> role mapping
+#' Mapping of theme elements to font roles
+#'
+#' @keywords internal
+#' @noRd
 .ggpatina_mapping <- c(
   "text"         = "body",
   "plot.title"   = "title",
@@ -13,11 +16,17 @@
 )
 
 # choose a template element: prefer plot’s own, else global theme, else global base text
+#'
+#' @keywords internal
+#' @noRd
 .template_for <- function(th, name) {
   th[[name]] %||% ggplot2::theme_get()[[name]] %||% ggplot2::theme_get()$text
 }
 
 # mutate only the $family on a text-like element; preserve size/face/margins/class
+#'
+#' @keywords internal
+#' @noRd
 .set_family <- function(el, family) {
   if (is.null(el) || inherits(el, "element_blank")) return(el)
   if ("family" %in% names(el)) el$family <- family
@@ -25,6 +34,9 @@
 }
 
 # helper: map era -> font families and (optionally) register them
+#'
+#' @keywords internal
+#' @noRd
 .period_families <- function(era = c("journal-1930s","journal-1960s","slide-1970s",
                                      "slide-1980s","typewriter-1950s","handdrawn-pen"),
                              install_if_missing = TRUE,
@@ -139,18 +151,6 @@ period_font_theme <- function(era = c("journal-1930s","journal-1960s","slide-197
     }
   }
   do.call(ggplot2::theme, mods)
-}
-
-# ---- Scoped showtext wrappers (no global state left behind) ------------------
-
-# Enables showtext_auto just for this call, then turns it off.
-# If the user already had auto=TRUE globally, this will disable it afterwards.
-with_showtext_auto <- function(expr) {
-  if (!requireNamespace("showtext", quietly = TRUE))
-    stop("Please install 'showtext'.")
-  withr::defer(showtext::showtext_auto(FALSE), parent.frame())
-  showtext::showtext_auto(TRUE)
-  force(expr)
 }
 
 # ---- Scoped showtext wrappers (no global state left behind) ------------------
