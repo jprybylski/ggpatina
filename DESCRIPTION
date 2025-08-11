@@ -32,4 +32,6 @@ Suggests:
     showtext,
     svglite,
     xml2,
-    rsvg
+    rsvg,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
