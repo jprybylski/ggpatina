@@ -27,9 +27,12 @@ Imports:
     utils,
     withr
 Suggests:
-    systemfonts,
-    sysfonts,
+    knitr,
+    rmarkdown,
+    rsvg,
     showtext,
     svglite,
-    xml2,
-    rsvg
+    systemfonts,
+    sysfonts,
+    xml2
+VignetteBuilder: knitr
