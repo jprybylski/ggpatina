@@ -44,3 +44,4 @@ the visible plotting region. By default it unions the panel viewport(s) and
 axis viewports, which matches user expectations when you want the wobble
 confined to the “plot area with axes” while excluding titles/margins/legends.
 }
+\keyword{internal}

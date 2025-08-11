@@ -102,6 +102,9 @@ slideify_transparency <- function(img,
 
 
 # roll/shift with wrap-around (dx>0 => right, dy>0 => down)
+#'
+#' @keywords internal
+#' @noRd
 .im_roll <- function(im, dx = 0, dy = 0) {
   info <- magick::image_info(im)[1, ]; w <- info$width; h <- info$height
   # horizontal
