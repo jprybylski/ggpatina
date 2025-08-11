@@ -153,9 +153,13 @@ with_showtext_auto <- function(expr) {
   force(expr)
 }
 
-# Print / save helpers that scope showtext to this call only
+#' Print / save helpers that scope showtext to this call only
+#'
+#' @param plot `ggplot` Plot object
+#' @param filename Name passed to ggsave
+#'
 #' @export
-print_st <- function(p) with_showtext_auto(print(p))
+print_st <- function(plot) with_showtext_auto(print(plot))
 
 #' @export
 ggsave_st <- function(filename, plot, ...) with_showtext_auto(
