@@ -157,10 +157,13 @@ with_showtext_auto <- function(expr) {
 #'
 #' @param plot `ggplot` Plot object
 #' @param filename Name passed to ggsave
-#'
+#' @param ... Passed to ggsave
+#' @rdname print_save
 #' @export
 print_st <- function(plot) with_showtext_auto(print(plot))
 
+
+#' @rdname print_save
 #' @export
 ggsave_st <- function(filename, plot, ...) with_showtext_auto(
   ggplot2::ggsave(filename = filename, plot = plot, ...)
