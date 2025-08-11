@@ -9,7 +9,7 @@
 Apply period-inspired fonts and analog-aging visual effects to ggplot figures. Includes presets for transparency slide and old-journal scan looks, plus ink bleed, Kodachrome-style fade, photocopy misalignment, and a blueprint (cyanotype) style.
 }
 \author{
-\strong{Maintainer}: Your Name \email{you@example.com}
+\strong{Maintainer}: John Prybylski \email{jprybylski@gmail.com} (\href{https://orcid.org/0000-0001-5802-0539}{ORCID})
 
 }
 \keyword{internal}
