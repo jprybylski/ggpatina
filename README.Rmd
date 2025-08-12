@@ -50,7 +50,7 @@ pak::pak("jprybylski/ggpatina")
 ```{r eval=FALSE}
 library(ggplot2)
 library(magick)
-# library(ggpatina)
+library(ggpatina)
 
 # A vanilla plot
 p <- ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +

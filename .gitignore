@@ -6,3 +6,5 @@
 .quarto
 a.out
 docs
+/doc/
+/Meta/

@@ -126,7 +126,8 @@ theme_blueprint <- function(base_size = 11, base_family = NULL,
       strip.text       = ggplot2::element_text(color = ink),
       legend.text      = ggplot2::element_text(color = ink),
       legend.title     = ggplot2::element_text(color = ink),
-      plot.margin      = ggplot2::margin(12, 14, 12, 14)
+      plot.margin      = ggplot2::margin(12, 14, 12, 14),
+      plot.title       = ggplot2::element_text(color = ink)
     )
 }
 

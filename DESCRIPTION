@@ -27,6 +27,7 @@ Imports:
     withr
 Suggests:
     knitr,
+    rmarkdown,
     systemfonts,
     sysfonts,
     showtext,

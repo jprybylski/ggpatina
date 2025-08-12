@@ -15,7 +15,7 @@ library(ggplot2)
 
 # Introduction
 
-`ggpatina` is a small toolkit for giving your **ggplot2** figures an analog
+`ggpatina` is a small toolkit for giving your **ggplot2*** figures an analog
 makeover. Effects are applied *after* the plot is rendered: you build a normal
 plot, convert it to a [`magick`](https://docs.ropensci.org/magick/) image with
 `as_magick()`, and then pass that image through one or more patina filters.
@@ -25,6 +25,9 @@ evaluated when the vignette is built, so any plots they produce will show up
 automatically. This vignette walks through several effects to illustrate the
 typical workflow.
 
+ * The plots can be applied to any figure provided it is converted to a `magick`
+ object, but most of the convenience functions and workflows assume `ggplot` input.
+
 # Blueprint style
 
 We'll start with a basic scatter plot and gradually turn it into a blueprint.
@@ -32,31 +35,56 @@ We'll start with a basic scatter plot and gradually turn it into a blueprint.
 ```{r blueprint}
 # build the plot as usual
 base <- ggplot(mtcars, aes(wt, mpg)) +
-  geom_point()
-
-# swap in the blueprint theme
-p_bp <- base + theme_blueprint()
+  geom_point(aes(shape = factor(cyl))) +
+  geom_smooth(se = FALSE, linewidth = 0.5) +
+  labs(title = "Fuel efficiency by weight",
+       x = "Weight (1000 lb)", y = "MPG", color = "Cyl") +
+  theme_minimal()
 
 # convert to a magick image and apply the blueprint patina
-img <- as_magick(p_bp)
-patina_blueprint(img)
+base |>
+  # Add some hand-drawn effect (and convert to image)
+  hand_drawn_wiggle(width=3, height=2) |>
+  # Apply a blueprint patina
+  patina_blueprint()
 ```
 
 # Slide transparency
 
-The transparency slide effect mimics a projected 35mm slide. We build on the
-same base plot so you can see the incremental steps.
+The transparency slide effect mimics a projected slide.
 
 ```{r slide}
 # start from the base scatter plot
-base <- ggplot(mtcars, aes(wt, mpg)) + geom_point(color = "steelblue")
+base <- ggplot(mtcars, aes(wt, mpg)) + 
+  geom_point(color = "steelblue") +
+  ggtitle("Fuel efficiency")
 
-# add the slide-friendly theme
-p_slide <- base + theme_transparency()
+# add the slide-style theme and nice font
+p_slide <- base + theme_transparency() + period_font_theme("slide-1980s")
 
 # render to a magick image, then give it slide artifacts
-img <- as_magick(p_slide)
+img <- as_magick(p_slide, width=3, height=2)
 slideify_transparency(img)
+```
+
+# Journal effects
+
+Give the impression that the plot was copied from a dusty journal in the library.
+
+```{r journal}
+# start from the base scatter plot
+base <- ggplot(mtcars, aes(wt, mpg)) + 
+  geom_point(size=0.5) +
+  labs(
+    caption = "Figure 1. Imapact of vehicle size on fuel efficiency."
+  )
+
+# add an old school theme and font
+p_journal <- base + theme_journal_1930s() + period_font_theme()
+
+# render to a magick image, then give it slide artifacts
+img <- as_magick(p_journal, width=2, height=1.5)
+scanify_journal(img)
 ```
 
 # Ink bleed
@@ -66,14 +94,21 @@ spreads into the paper.
 
 ```{r bleed}
 # reuse the base scatter plot
-base <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
+base <- ggplot(mtcars, aes(wt, mpg)) + 
+  geom_point() +
+  labs(
+    title = "Nation's fuel economy problem driven by size",
+    caption = "Expert's analysis of a selection of cars released last year",
+    x = "MPG",
+    y = "Weight (x100o lb)"
+  )
 
 # newspaper theme sets up the flat tones
 p_news <- base + theme_newspaper()
 
-# convert and let the ink bleed a bit
-img <- as_magick(p_news)
-patina_ink_bleed(img)
+# convert and apply effects
+as_magick(p_news, width=3, height=2) |>
+  patina_newspaper()
 ```
 
 ### Kodachrome photo
@@ -83,7 +118,7 @@ Warm colors and a soft fade evoke the look of vintage Kodachrome film.
 ```{r kodachrome}
 base <- ggplot(mtcars, aes(wt, mpg)) + geom_point(color = "firebrick")
 p_koda <- base + theme_transparency()
-img <- as_magick(p_koda)
+img <- as_magick(p_koda, width=3, height=2)
 patina_kodachrome(img)
 ```
 
@@ -94,7 +129,7 @@ This effect mimics a low-resolution television capture.
 ```{r newscast}
 base <- ggplot(mtcars, aes(wt, mpg)) + geom_point(color = "goldenrod")
 p_cast <- base + theme_newscast()
-img <- as_magick(p_cast)
+img <- as_magick(p_cast, width=3, height=2)
 patina_newscast(img)
 ```
 
@@ -104,7 +139,7 @@ Misaligned colors and grain suggest a worn-out photocopier.
 
 ```{r photocopy}
 base <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
-img <- as_magick(base)
+img <- as_magick(base, width=3, height=2)
 patina_photocopy(img)
 ```
 
