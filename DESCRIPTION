@@ -36,3 +36,4 @@ Suggests:
     sysfonts,
     xml2
 VignetteBuilder: knitr
+URL: https://jprybylski.github.io/ggpatina/
