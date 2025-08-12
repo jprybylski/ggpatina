@@ -2,7 +2,7 @@
 % Please edit documentation in R/themes.R
 \name{theme_transparency}
 \alias{theme_transparency}
-\title{Transparency-slide theme (clean white, thin grid, generous margins)}
+\title{Transparency-slide theme}
 \usage{
 theme_transparency(
   base_size = 11,
@@ -21,5 +21,12 @@ theme_transparency(
 \item{grid_col}{grid color}
 }
 \description{
-Transparency-slide theme (clean white, thin grid, generous margins)
+Clean white slide with a thin grid and generous margins.
+}
+\examples{
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
+    ggplot2::geom_point() +
+    theme_transparency()
+}
 }

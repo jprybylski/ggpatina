@@ -82,12 +82,18 @@
   fam
 }
 
-#' Apply period fonts in place (fonts only)
+#' Apply period fonts in place
 #'
 #' Changes only the `family` of text elements on a ggplot, preserving size, face,
 #' colour, margins, and element classes. When an element is missing and needs to
 #' be created (scope = "all_listed"), it is cloned from the current/global theme
 #' first so sizes never reset.
+#'
+#' @examples
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
+#'   apply_period_fonts(p)
+#' }
 #'
 #' @param p A ggplot.
 #' @param era One of: "journal-1930s","journal-1960s","slide-1970s",
@@ -130,7 +136,18 @@ apply_period_fonts <- function(p,
   p
 }
 
-#' Period font theme (fonts only; clones sizes from current global theme)
+#' Period font theme
+#'
+#' Returns a theme that swaps font families while preserving sizes from the
+#' current global theme.
+#'
+#' @examples
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
+#'     ggplot2::geom_point() +
+#'     period_font_theme()
+#' }
+#'
 #' @inheritParams apply_period_fonts
 #' @return A `ggplot2::theme` that changes only font families on listed elements.
 #' @export

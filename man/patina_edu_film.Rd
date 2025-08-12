@@ -2,7 +2,7 @@
 % Please edit documentation in R/effect_edu_film.R
 \name{patina_edu_film}
 \alias{patina_edu_film}
-\title{Old educational film preset (warm/green cast, big grain, dust & scratches)}
+\title{Old educational film preset}
 \usage{
 patina_edu_film(
   img,
@@ -45,5 +45,11 @@ patina_edu_film(
 \item{scratches}{integer number of vertical scratches to draw (0 = none)}
 }
 \description{
-Old educational film preset (warm/green cast, big grain, dust & scratches)
+Adds a warm/green cast, heavy grain, dust, scratches, and slight weave for a classroom 16mm look.
+}
+\examples{
+if (requireNamespace("magick", quietly = TRUE)) {
+  img <- magick::image_read("logo:")
+  patina_edu_film(img)
+}
 }

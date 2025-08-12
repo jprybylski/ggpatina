@@ -1,5 +1,13 @@
 
-#' Blueprint (cyanotype) style
+#' Blueprint style
+#'
+#' Creates a cyanotype blueprint effect with optional grid and paper texture.
+#'
+#' @examples
+#' if (requireNamespace("magick", quietly = TRUE)) {
+#'   img <- magick::image_read("logo:")
+#'   patina_blueprint(img)
+#' }
 #'
 #' @param img magick image.
 #' @param bg Blueprint background color.

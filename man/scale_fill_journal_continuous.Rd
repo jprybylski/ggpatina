@@ -2,7 +2,7 @@
 % Please edit documentation in R/themes.R
 \name{scale_fill_journal_continuous}
 \alias{scale_fill_journal_continuous}
-\title{Continuous grayscale for journal themes (fill)}
+\title{Continuous grayscale scale (fill)}
 \usage{
 scale_fill_journal_continuous(low = "#0f0f0f", high = "#adadad", ...)
 }
@@ -15,7 +15,7 @@ scale_fill_journal_continuous(low = "#0f0f0f", high = "#adadad", ...)
 A continuous fill scale.
 }
 \description{
-Continuous grayscale for journal themes (fill)
+Two-stop gradient for fill aesthetics that prints well with journal patinas.
 }
 \examples{
 # p + scale_fill_journal_continuous()

@@ -2,7 +2,7 @@
 % Please edit documentation in R/effect_ink_bleed.R
 \name{patina_ink_bleed}
 \alias{patina_ink_bleed}
-\title{Ink bleeding into paper fibers (fixed)}
+\title{Ink bleed effect}
 \usage{
 patina_ink_bleed(
   img,
@@ -27,5 +27,11 @@ patina_ink_bleed(
 \item{paper_texture}{optional texture laid UNDER the plot}
 }
 \description{
-Ink bleeding into paper fibers (fixed)
+Simulates ink bleeding into paper fibers.
+}
+\examples{
+if (requireNamespace("magick", quietly = TRUE)) {
+  img <- magick::image_read("logo:")
+  patina_ink_bleed(img)
+}
 }

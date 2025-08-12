@@ -2,7 +2,7 @@
 % Please edit documentation in R/effect_newscast.R
 \name{patina_newscast}
 \alias{patina_newscast}
-\title{Old newscast preset (scanlines, chroma bleed, tube glow, vignette, grain)}
+\title{Old newscast effect}
 \usage{
 patina_newscast(
   img,
@@ -48,5 +48,11 @@ patina_newscast(
 \item{corner_margin}{fraction margin from edges when placing the corner region}
 }
 \description{
-Old newscast preset (scanlines, chroma bleed, tube glow, vignette, grain)
+Adds scanlines, chroma bleed, tube glow, vignette, and noise to mimic a CRT broadcast.
+}
+\examples{
+if (requireNamespace("magick", quietly = TRUE)) {
+  img <- magick::image_read("logo:")
+  patina_newscast(img)
+}
 }

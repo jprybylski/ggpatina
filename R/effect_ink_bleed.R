@@ -1,4 +1,13 @@
-#' Ink bleeding into paper fibers (fixed)
+#' Ink bleed effect
+#'
+#' Simulates ink bleeding into paper fibers.
+#'
+#' @examples
+#' if (requireNamespace("magick", quietly = TRUE)) {
+#'   img <- magick::image_read("logo:")
+#'   patina_ink_bleed(img)
+#' }
+#'
 #' @param img magick image (from as_magick)
 #' @param radius feather (sigma) in px for the bleed falloff
 #' @param expand dilation (px) to push the bleed outward from strokes

@@ -2,7 +2,7 @@
 % Please edit documentation in R/themes.R
 \name{theme_newscast}
 \alias{theme_newscast}
-\title{Newscast/CRT theme (dark UI, light ink, faint grid)}
+\title{Newscast theme}
 \usage{
 theme_newscast(
   base_size = 11,
@@ -24,5 +24,12 @@ theme_newscast(
 \item{grid_col}{grid color (low alpha)}
 }
 \description{
-Newscast/CRT theme (dark UI, light ink, faint grid)
+Dark background with light ink, faint grid, and CRT-inspired styling.
+}
+\examples{
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
+    ggplot2::geom_point() +
+    theme_newscast()
+}
 }

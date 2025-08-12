@@ -1,4 +1,13 @@
-#' Old newspaper preset (readable defaults: light page, crisp ink, subtle dots)
+#' Old newspaper effect
+#'
+#' Creates a light newsprint look with crisp ink, subtle dots, and optional
+#' paper texture.
+#'
+#' @examples
+#' if (requireNamespace("magick", quietly = TRUE)) {
+#'   img <- magick::image_read("logo:")
+#'   patina_newspaper(img)
+#' }
 #'
 #' @param img magick image (rasterized plot)
 #' @param halftone 0..1 strength of dot pattern (applied to background only)

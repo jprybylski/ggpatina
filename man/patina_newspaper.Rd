@@ -2,7 +2,7 @@
 % Please edit documentation in R/effect_newspaper.R
 \name{patina_newspaper}
 \alias{patina_newspaper}
-\title{Old newspaper preset (readable defaults: light page, crisp ink, subtle dots)}
+\title{Old newspaper effect}
 \usage{
 patina_newspaper(
   img,
@@ -45,5 +45,11 @@ patina_newspaper(
 \item{line_gain}{0..1 deepen only the ink strokes after effects}
 }
 \description{
-Old newspaper preset (readable defaults: light page, crisp ink, subtle dots)
+Creates a light newsprint look with crisp ink, subtle dots, and optional paper texture.
+}
+\examples{
+if (requireNamespace("magick", quietly = TRUE)) {
+  img <- magick::image_read("logo:")
+  patina_newspaper(img)
+}
 }

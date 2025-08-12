@@ -1,4 +1,13 @@
-#' Old newscast preset (scanlines, chroma bleed, tube glow, vignette, grain)
+#' Old newscast effect
+#'
+#' Adds scanlines, chroma bleed, tube glow, vignette, and noise to mimic a CRT
+#' broadcast.
+#'
+#' @examples
+#' if (requireNamespace("magick", quietly = TRUE)) {
+#'   img <- magick::image_read("logo:")
+#'   patina_newscast(img)
+#' }
 #'
 #' @param img magick image
 #' @param sat saturation multiplier (1 = unchanged)

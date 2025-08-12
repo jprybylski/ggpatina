@@ -1,4 +1,13 @@
-#' Old educational film preset (warm/green cast, big grain, dust & scratches)
+#' Old educational film preset
+#'
+#' Adds a warm/green cast, heavy grain, dust, scratches, and slight weave for a
+#' classroom 16mm look.
+#'
+#' @examples
+#' if (requireNamespace("magick", quietly = TRUE)) {
+#'   img <- magick::image_read("logo:")
+#'   patina_edu_film(img)
+#' }
 #' @param img magick image
 #' @param warmth 0..1 warm/green cast (0=none)
 #' @param grain 0..1 coarse film grain
@@ -138,11 +147,16 @@ patina_edu_film <- function(
 }
 
 
-#' Animate an educational-film segment (gate weave, flicker, dust per frame)
+#' Animate an educational-film segment
 #'
-#' Builds an animated GIF that looks like a short 16mm instructional clip.
-#' Each frame calls `patina_edu_film()` with per-frame jitter and seed,
-#' then adds slight brightness flicker and tiny XY weave. Dimensions are preserved.
+#' Builds an animated GIF of a short 16mm instructional clip with gate weave,
+#' flicker, and per-frame dust.
+#'
+#' @examples
+#' if (requireNamespace("magick", quietly = TRUE)) {
+#'   img <- magick::image_read("logo:")
+#'   animate_edu_film(img, n_frames = 5, fps = 2)
+#' }
 #'
 #' @param img magick image (your rasterized ggplot)
 #' @param n_frames number of frames (e.g., 48)

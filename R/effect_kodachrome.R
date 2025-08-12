@@ -1,4 +1,12 @@
-#' Faded, overexposed Kodachrome vibe (warm cast + halation + grain)
+#' Kodachrome effect
+#'
+#' Adds a warm cast, halation glow, and grain for a faded Kodachrome vibe.
+#'
+#' @examples
+#' if (requireNamespace("magick", quietly = TRUE)) {
+#'   img <- magick::image_read("logo:")
+#'   patina_kodachrome(img)
+#' }
 #'
 #' @param img magick image (rasterized plot).
 #' @param warmth 0..1 warm colorize.

@@ -1,5 +1,13 @@
-#' Old journal scan (sepia/mono, soft dither, paper, rotating top shadow)
-#' Shadow is drawn in a top margin first, then the whole page is rotated.
+#' Old journal scan preset
+#'
+#' Adds sepia tone, soft dither, paper texture, and a rotating top shadow.
+#' The shadow is drawn in a top margin before rotating the whole page.
+#'
+#' @examples
+#' if (requireNamespace("magick", quietly = TRUE)) {
+#'   img <- magick::image_read("logo:")
+#'   scanify_journal(img)
+#' }
 #'
 #' @param img magick image
 #' @param paper optional path/URL to paper texture

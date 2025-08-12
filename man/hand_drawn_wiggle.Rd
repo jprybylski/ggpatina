@@ -2,7 +2,7 @@
 % Please edit documentation in R/hand_drawn.R
 \name{hand_drawn_wiggle}
 \alias{hand_drawn_wiggle}
-\title{Hand-drawn wobble (post-processing; auto scale; exact panel mask for ggplot)}
+\title{Hand-drawn wobble}
 \usage{
 hand_drawn_wiggle(
   x,
@@ -47,5 +47,11 @@ hand_drawn_wiggle(
 magick-image
 }
 \description{
-Hand-drawn wobble (post-processing; auto scale; exact panel mask for ggplot)
+Adds a sketchy wobble with automatic scaling and panel masking.
+}
+\examples{
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
+  hand_drawn_wiggle(p)
+}
 }
