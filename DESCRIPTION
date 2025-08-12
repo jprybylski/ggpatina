@@ -1,11 +1,11 @@
 Package: ggpatina
 Type: Package
-Title: Period Aesthetics and Analog Aging Effects for ggplot
+Title: Period Aesthetics and Analog Aging Effects for figures
 Version: 0.0.1
 Authors@R: 
     person("John", "Prybylski", , "jprybylski@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5802-0539"))
-Description: Apply period-inspired fonts and analog-aging visual effects to ggplot figures. 
+Description: Apply period-inspired fonts and analog-aging visual effects to figures. 
     Includes presets for transparency slide and old-journal scan looks, plus ink bleed,
     Kodachrome-style fade, photocopy misalignment, and a blueprint (cyanotype) style.
 License: MIT + file LICENSE

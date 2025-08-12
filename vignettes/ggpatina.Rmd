@@ -25,7 +25,7 @@ evaluated when the vignette is built, so any plots they produce will show up
 automatically. This vignette walks through several effects to illustrate the
 typical workflow.
 
- * The plots can be applied to any figure provided it is converted to a `magick`
+ \* The plots can be applied to any figure provided it is converted to a `magick`
  object, but most of the convenience functions and workflows assume `ggplot` input.
 
 # Blueprint style

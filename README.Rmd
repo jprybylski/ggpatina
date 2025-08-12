@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# ggpatina
+# ggpatina <a href="https://jprybylski.github.io/ggpatina/"><img src="man/figures/logo.png" align="right" height="139" alt="ggpatina website" /></a>
 
 <!-- badges: start -->
 
@@ -47,7 +47,7 @@ pak::pak("jprybylski/ggpatina")
 
 ## Quick start
 
-```{r eval=FALSE}
+```{r}
 library(ggplot2)
 library(magick)
 library(ggpatina)
@@ -87,7 +87,7 @@ image_write(img_scan, path = "man/figures/scanify_journal.png", format = "png")
 
 ## More looks (grab-and-go)
 
-```{r eval=FALSE}
+```{r}
 # ---------- 1) Transparency slide (Kodachrome-ish transparency) ----------
 # Slight keystone + gentle vignette; keep the leak modest so plot stays readable
 img_slide <- slideify_transparency(
@@ -103,7 +103,7 @@ image_write(img_slide, path = "man/figures/slide.png", format = "png")
 
 ![](man/figures/slide.png)
 
-```{r eval=FALSE}
+```{r}
 # ---------- 2) Old newscast / CRT ----------
 # Pick scanline period from image height so it stays visible but not overbearing
 img_crt <- patina_newscast(
@@ -120,7 +120,7 @@ image_write(img_crt, path = "man/figures/crt.png", format = "png")
 
 ![](man/figures/crt.png)
 
-```{r eval=FALSE}
+```{r}
 # ---------- 3) Photocopy ----------
 img_copy <- patina_photocopy(
   img_wobble,
@@ -135,7 +135,7 @@ image_write(img_copy, path = "man/figures/photocopy.png", format = "png")
 
 ![](man/figures/photocopy.png)
 
-```{r eval=FALSE}
+```{r }
 # ---------- 4) Educational film (animated GIF) ----------
 # A short loop with mild gate weave; pass film params via ... to your patina
 img_film <- animate_edu_film(

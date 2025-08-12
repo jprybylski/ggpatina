@@ -5,6 +5,9 @@
 
 <!-- badges: start -->
 
+[![Codecov test
+coverage](https://codecov.io/gh/jprybylski/ggpatina/graph/badge.svg)](https://app.codecov.io/gh/jprybylski/ggpatina)
+[![R-CMD-check](https://github.com/jprybylski/ggpatina/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jprybylski/ggpatina/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 Make **ggplot2** figures look like they were scanned, photocopied,
@@ -44,7 +47,10 @@ pak::pak("jprybylski/ggpatina")
 ``` r
 library(ggplot2)
 library(magick)
-# library(ggpatina)
+#> Linking to ImageMagick 6.9.12.98
+#> Enabled features: cairo, freetype, fftw, ghostscript, heic, lcms, pango, raw, rsvg, webp
+#> Disabled features: fontconfig, x11
+library(ggpatina)
 
 # A vanilla plot
 p <- ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
@@ -61,6 +67,7 @@ img_wobble <- hand_drawn_wiggle(
   p_fonts, width = 2, height = 1.5, dpi = 300,
  affect_text = FALSE, fill_bg = "white"
 )
+#> `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
 # 3) Patina: old journal scan (sepia/mono + dither + slight tilt)
 # Tip: provide a paper texture path for extra authenticity, e.g. "inst/extdata/paper_news.jpg"
