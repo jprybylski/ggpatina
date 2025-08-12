@@ -78,7 +78,7 @@ img <- hand_drawn_wiggle(
   freq   = 0.55,
   seed   = 7,
   affect_text = TRUE,
-  fill_bg = "gray"
+  fill_bg = "cyan"
 )
 
 # ---------------------------------------------------------------------------
@@ -95,7 +95,7 @@ img <- hand_drawn_wiggle(
 # img_pat <- patina_photocopy(img, ghost_opacity = 0.10, banding = 0.10, tilt_deg = 0.3, protect_lines = 0.85)
 
 # # D. Newscast / CRT (keeps color if your text is colored)
-img_pat <- patina_newscast(img, scan_strength = 0.25, scan_period = 15L, ca_px = 10L, glow = 0.80, noise = 0.25, warp = "full", warp_amount = 0.01)
+img_pat <- patina_newscast(img, sat=5, scan_strength = 0.8, scan_period = 15L, ca_px = 8L, noise = 0.25, warp = "full", warp_amount = 0.01)
 
 # ---------------------------------------------------------------------------
 # 5) Save a rectangular PNG, then hex-crop it
