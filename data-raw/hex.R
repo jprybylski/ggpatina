@@ -31,7 +31,7 @@ hex_crop <- function(infile, outfile = "man/figures/logo.png") {
   img <- cropcircles::hex_crop(
     images = infile,
     border_colour = "grey22",
-    border_size = 5
+    border_size = 10
   )
   p <- ggplot2::ggplot() +
     ggpath::geom_from_path(ggplot2::aes(0.5, 0.5, path = img)) +
@@ -60,7 +60,7 @@ tag   <- "make it look found"
 # ---------------------------------------------------------------------------
 # 3) Build plot, apply period font (fonts only), then wobble to image
 # ---------------------------------------------------------------------------
-p0 <- make_text_plot(title, tag, title_size = 24, tag_size = 10)
+p0 <- make_text_plot(title, tag, title_size = 28, tag_size = 14)
 
 # Fonts only; no size changes or global state
 p1 <- apply_period_fonts(
