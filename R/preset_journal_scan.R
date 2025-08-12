@@ -21,6 +21,7 @@
 #' @param pad_top_px top margin in pixels (NULL = ~2% of height)
 #' @param shadow_strength 0..1 peak opacity at the very top of the margin
 #' @param saturation If not sepia toned, color saturation
+#' @return A `magick-image` with an aged journal appearance.
 #' @export
 scanify_journal <- function(
   img, paper = NULL, sepia = TRUE, dither = TRUE, dither_strength = 0.30,

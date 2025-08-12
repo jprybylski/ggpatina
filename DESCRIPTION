@@ -1,12 +1,14 @@
 Package: ggpatina
 Type: Package
-Title: Period Aesthetics and Analog Aging Effects for figures
+Title: Period Aesthetics and Analog Aging Effects for Figures
 Version: 0.0.1
-Authors@R: 
-    person("John", "Prybylski", , "jprybylski@gmail.com", role = c("aut", "cre"),
+Authors@R:
+    person("John", "Prybylski", , "jprybylski@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-5802-0539"))
-Description: Apply period-inspired fonts and analog-aging visual effects to figures. 
-    Includes presets for transparency slide and old-journal scan looks, plus ink bleed,
+Author: John Prybylski [aut, cre, cph]
+Maintainer: John Prybylski <jprybylski@gmail.com>
+Description: Provides period-inspired fonts and analog-aging visual effects for figures.
+    Includes presets for transparency slides and old journal scans, plus ink bleed,
     Kodachrome-style fade, photocopy misalignment, and a blueprint (cyanotype) style.
 License: MIT + file LICENSE
 Encoding: UTF-8

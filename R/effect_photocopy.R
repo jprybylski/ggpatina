@@ -32,6 +32,7 @@
 #' @param wash 0..1 how much to lift paper/background (0 = none, 1 = strong)
 #' @param line_gain 0..1 re-ink amount applied after effects (0 = none)
 #' @param contrast_pop strength of final sigmoid contrast (0 = none)
+#' @return A `magick-image` with a photocopier double-pass effect.
 #' @export
 patina_photocopy <- function(img,
                              offset = c(3, -2),

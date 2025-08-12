@@ -31,8 +31,10 @@ This package adds lightweight, composable *patina* filters (on **magick** images
 ## Installation
 
 ```{r, eval=FALSE}
-# install.packages("ggpatina")
+# Install released version from CRAN
+install.packages("ggpatina")
 
+# Install development version from GitHub
 pak::pak("jprybylski/ggpatina")
 
 ```

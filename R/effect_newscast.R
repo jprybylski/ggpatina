@@ -24,6 +24,7 @@
 #' @param corner which corner for corner-warp: "ne","nw","se","sw"
 #' @param corner_frac size of the warped corner region as fraction of width/height (0.3–0.8)
 #' @param corner_margin fraction margin from edges when placing the corner region
+#' @return A `magick-image` with a vintage newscast look.
 #' @export
 patina_newscast <- function(
   img,

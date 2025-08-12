@@ -16,6 +16,7 @@
 #' @param bg panel background color
 #' @param paper overall page color
 #' @param grid_col major grid line color
+#' @return A `ggplot2::theme`.
 #' @export
 theme_newspaper <- function(base_size = 11, base_family = NULL,
                             bg = "#f7f3e8", paper = "#f5f0e6",
@@ -52,6 +53,7 @@ theme_newspaper <- function(base_size = 11, base_family = NULL,
 #' @param bg panel background
 #' @param page overall background
 #' @param grid_col grid color (low alpha)
+#' @return A `ggplot2::theme`.
 #' @export
 theme_newscast <- function(base_size = 11, base_family = NULL,
                            bg = "#151515", page = "#111111",
@@ -92,6 +94,7 @@ theme_newscast <- function(base_size = 11, base_family = NULL,
 #' @param bg panel background
 #' @param page overall background
 #' @param grid_col major grid color
+#' @return A `ggplot2::theme`.
 #' @export
 theme_edu_film <- function(base_size = 11, base_family = NULL,
                            bg = "#e9e1c9", page = "#e5dcc5",
@@ -130,6 +133,7 @@ theme_edu_film <- function(base_size = 11, base_family = NULL,
 #' @param base_family font family (optional)
 #' @param page page background
 #' @param grid_col grid color
+#' @return A `ggplot2::theme`.
 #' @export
 theme_transparency <- function(base_size = 11, base_family = NULL,
                                page = "white", grid_col = "#bdbdbd66") {
@@ -163,6 +167,7 @@ theme_transparency <- function(base_size = 11, base_family = NULL,
 #' @param page page/navy background
 #' @param ink line/text color
 #' @param grid_col grid color
+#' @return A `ggplot2::theme`.
 #' @export
 theme_blueprint <- function(base_size = 11, base_family = NULL,
                             page = "#0b1d3a", ink = "#e6f2ff",
