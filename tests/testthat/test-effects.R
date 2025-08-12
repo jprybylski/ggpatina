@@ -2,15 +2,14 @@ test_that("as_magick requires showtext", {
   skip_if_not_installed("ggplot2")
   skip_if_not_installed("magick")
   p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
-  withr::with_libpaths(
-    tempdir(), action = "replace", include_site = FALSE, include_base = FALSE, {
+  withr::with_libpaths(tempdir(), {
     if ("showtext" %in% loadedNamespaces()) unloadNamespace("showtext")
     expect_error(
       as_magick(p, width = 1, height = 1, dpi = 72),
       "Please install 'showtext'",
       fixed = TRUE
     )
-  })
+  }, action = "replace")
 })
 
 test_that("patina_blueprint handles grid and texture", {
