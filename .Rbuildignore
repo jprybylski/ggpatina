@@ -2,6 +2,9 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^codecov\.yml$
-^\.github$
 ^a\.out$
 ^LICENSE\.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$

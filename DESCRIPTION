@@ -26,6 +26,7 @@ Imports:
     utils,
     withr
 Suggests:
+    knitr,
     systemfonts,
     sysfonts,
     showtext,
@@ -34,3 +35,5 @@ Suggests:
     rsvg,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+VignetteBuilder: knitr
+URL: https://jprybylski.github.io/ggpatina/
