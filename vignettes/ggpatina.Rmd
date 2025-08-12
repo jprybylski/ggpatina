@@ -98,9 +98,9 @@ base <- ggplot(mtcars, aes(wt, mpg)) +
   geom_point() +
   labs(
     title = "Nation's fuel economy problem driven by size",
-    caption = "Expert's analysis of a selection of cars released last year",
-    x = "MPG",
-    y = "Weight (x100o lb)"
+    caption = "Expert's analysis of cars released last year",
+    y = "MPG",
+    x = "Weight (x1000 lb)"
   )
 
 # newspaper theme sets up the flat tones
