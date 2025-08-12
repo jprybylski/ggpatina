@@ -62,15 +62,20 @@
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p><code>ggpatina</code> is a small toolkit for giving your
-<strong>ggplot2</strong> figures an analog makeover. Effects are applied
-<em>after</em> the plot is rendered: you build a normal plot, convert it
-to a <a href="https://docs.ropensci.org/magick/" class="external-link"><code>magick</code></a>
-image with <code><a href="../reference/as_magick.html">as_magick()</a></code>, and then pass that image through
-one or more patina filters. The package also includes a few lightweight
-themes and helpers for period fonts so that the whole graphic carries
-the vibe. Code chunks below are evaluated when the vignette is built, so
-any plots they produce will show up automatically. This vignette walks
-through several effects to illustrate the typical workflow.</p>
+<strong>ggplot2</strong>* figures an analog makeover. Effects are
+applied <em>after</em> the plot is rendered: you build a normal plot,
+convert it to a <a href="https://docs.ropensci.org/magick/" class="external-link"><code>magick</code></a> image
+with <code><a href="../reference/as_magick.html">as_magick()</a></code>, and then pass that image through one or
+more patina filters. The package also includes a few lightweight themes
+and helpers for period fonts so that the whole graphic carries the vibe.
+Code chunks below are evaluated when the vignette is built, so any plots
+they produce will show up automatically. This vignette walks through
+several effects to illustrate the typical workflow.</p>
+<ul>
+<li>The plots can be applied to any figure provided it is converted to a
+<code>magick</code> object, but most of the convenience functions and
+workflows assume <code>ggplot</code> input.</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="blueprint-style">Blueprint style<a class="anchor" aria-label="anchor" href="#blueprint-style"></a>
@@ -80,58 +85,92 @@ blueprint.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># build the plot as usual</span></span>
 <span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">wt</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># swap in the blueprint theme</span></span>
-<span><span class="va">p_bp</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_blueprint.html">theme_blueprint</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span>, linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Fuel efficiency by weight"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"Weight (1000 lb)"</span>, y <span class="op">=</span> <span class="st">"MPG"</span>, color <span class="op">=</span> <span class="st">"Cyl"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># convert to a magick image and apply the blueprint patina</span></span>
-<span><span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span><span class="va">p_bp</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/patina_blueprint.html">patina_blueprint</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">base</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># Add some hand-drawn effect (and convert to image)</span></span>
+<span>  <span class="fu"><a href="../reference/hand_drawn_wiggle.html">hand_drawn_wiggle</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">3</span>, height<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># Apply a blueprint patina</span></span>
+<span>  <span class="fu"><a href="../reference/patina_blueprint.html">patina_blueprint</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula = 'y ~ x'</span></span></code></pre></div>
 <p><img src="ggpatina_files/figure-html/blueprint-1.png"><!-- --></p>
 </div>
 <div class="section level2">
 <h2 id="slide-transparency">Slide transparency<a class="anchor" aria-label="anchor" href="#slide-transparency"></a>
 </h2>
-<p>The transparency slide effect mimics a projected 35mm slide. We build
-on the same base plot so you can see the incremental steps.</p>
+<p>The transparency slide effect mimics a projected slide.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># start from the base scatter plot</span></span>
-<span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">wt</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"steelblue"</span><span class="op">)</span></span>
+<span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">wt</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"steelblue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Fuel efficiency"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># add the slide-friendly theme</span></span>
-<span><span class="va">p_slide</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_transparency.html">theme_transparency</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># add the slide-style theme and nice font</span></span>
+<span><span class="va">p_slide</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_transparency.html">theme_transparency</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="../reference/period_font_theme.html">period_font_theme</a></span><span class="op">(</span><span class="st">"slide-1980s"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># render to a magick image, then give it slide artifacts</span></span>
-<span><span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span><span class="va">p_slide</span><span class="op">)</span></span>
+<span><span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span><span class="va">p_slide</span>, width<span class="op">=</span><span class="fl">3</span>, height<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/slideify_transparency.html">slideify_transparency</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ggpatina_files/figure-html/slide-1.png"><!-- --></p>
+</div>
+<div class="section level2">
+<h2 id="journal-effects">Journal effects<a class="anchor" aria-label="anchor" href="#journal-effects"></a>
+</h2>
+<p>Give the impression that the plot was copied from a dusty journal in
+the library.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># start from the base scatter plot</span></span>
+<span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">wt</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>    caption <span class="op">=</span> <span class="st">"Figure 1. Imapact of vehicle size on fuel efficiency."</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="co"># add an old school theme and font</span></span>
+<span><span class="va">p_journal</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_journal_1930s.html">theme_journal_1930s</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="../reference/period_font_theme.html">period_font_theme</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># render to a magick image, then give it slide artifacts</span></span>
+<span><span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span><span class="va">p_journal</span>, width<span class="op">=</span><span class="fl">2</span>, height<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/scanify_journal.html">scanify_journal</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span></code></pre></div>
+<p><img src="ggpatina_files/figure-html/journal-1.png"><!-- --></p>
 </div>
 <div class="section level2">
 <h2 id="ink-bleed">Ink bleed<a class="anchor" aria-label="anchor" href="#ink-bleed"></a>
 </h2>
 <p>Ink bleed gives a photocopied or cheaply printed feel where edges
 blur and ink spreads into the paper.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># reuse the base scatter plot</span></span>
-<span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">wt</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">wt</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Nation's fuel economy problem driven by size"</span>,</span>
+<span>    caption <span class="op">=</span> <span class="st">"Expert's analysis of a selection of cars released last year"</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"MPG"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"Weight (x100o lb)"</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="co"># newspaper theme sets up the flat tones</span></span>
 <span><span class="va">p_news</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_newspaper.html">theme_newspaper</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># convert and let the ink bleed a bit</span></span>
-<span><span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span><span class="va">p_news</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/patina_ink_bleed.html">patina_ink_bleed</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># convert and apply effects</span></span>
+<span><span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span><span class="va">p_news</span>, width<span class="op">=</span><span class="fl">3</span>, height<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/patina_newspaper.html">patina_newspaper</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ggpatina_files/figure-html/bleed-1.png"><!-- --></p>
 <div class="section level4">
 <h4 id="kodachrome-photo">Kodachrome photo<a class="anchor" aria-label="anchor" href="#kodachrome-photo"></a>
 </h4>
 <p>Warm colors and a soft fade evoke the look of vintage Kodachrome
 film.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">wt</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"firebrick"</span><span class="op">)</span></span>
 <span><span class="va">p_koda</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_transparency.html">theme_transparency</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span><span class="va">p_koda</span><span class="op">)</span></span>
+<span><span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span><span class="va">p_koda</span>, width<span class="op">=</span><span class="fl">3</span>, height<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/patina_kodachrome.html">patina_kodachrome</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ggpatina_files/figure-html/kodachrome-1.png"><!-- --></p>
 </div>
@@ -139,10 +178,10 @@ film.</p>
 <h4 id="newscast-screenshot">Newscast screenshot<a class="anchor" aria-label="anchor" href="#newscast-screenshot"></a>
 </h4>
 <p>This effect mimics a low-resolution television capture.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">wt</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"goldenrod"</span><span class="op">)</span></span>
 <span><span class="va">p_cast</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_newscast.html">theme_newscast</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span><span class="va">p_cast</span><span class="op">)</span></span>
+<span><span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span><span class="va">p_cast</span>, width<span class="op">=</span><span class="fl">3</span>, height<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/patina_newscast.html">patina_newscast</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ggpatina_files/figure-html/newscast-1.png"><!-- --></p>
 </div>
@@ -150,9 +189,9 @@ film.</p>
 <h4 id="photocopy">Photocopy<a class="anchor" aria-label="anchor" href="#photocopy"></a>
 </h4>
 <p>Misaligned colors and grain suggest a worn-out photocopier.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">wt</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span><span class="va">base</span><span class="op">)</span></span>
+<span><span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span><span class="va">base</span>, width<span class="op">=</span><span class="fl">3</span>, height<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/patina_photocopy.html">patina_photocopy</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ggpatina_files/figure-html/photocopy-1.png"><!-- --></p>
 <p>These examples are just a starting point. Combine effects and themes
