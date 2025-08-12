@@ -2,7 +2,7 @@
 % Please edit documentation in R/effect_photocopy.R
 \name{patina_photocopy}
 \alias{patina_photocopy}
-\title{Photocopier double-pass misalignment (ghost + banding, line-safe, adjustable wash)}
+\title{Photocopier double-pass effect}
 \usage{
 patina_photocopy(
   img,
@@ -36,5 +36,13 @@ patina_photocopy(
 \item{contrast_pop}{strength of final sigmoid contrast (0 = none)}
 }
 \description{
-Photocopier double-pass misalignment (ghost + banding, line-safe, adjustable wash)
+Adds a ghost offset, banding, and adjustable wash while protecting dark lines.
+}
+\examples{
+\dontrun{
+if (requireNamespace("magick", quietly = TRUE)) {
+  img <- magick::image_blank(200, 200, "white")
+  patina_photocopy(img)
+}
+}
 }

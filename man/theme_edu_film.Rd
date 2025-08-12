@@ -2,7 +2,7 @@
 % Please edit documentation in R/themes.R
 \name{theme_edu_film}
 \alias{theme_edu_film}
-\title{Educational-film theme (warm page, dotted majors, gentle border)}
+\title{Educational-film theme}
 \usage{
 theme_edu_film(
   base_size = 11,
@@ -24,5 +24,14 @@ theme_edu_film(
 \item{grid_col}{major grid color}
 }
 \description{
-Educational-film theme (warm page, dotted majors, gentle border)
+Warm page tones with dotted majors and a subtle border.
+}
+\examples{
+\dontrun{
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
+    ggplot2::geom_point() +
+    theme_edu_film()
+}
+}
 }

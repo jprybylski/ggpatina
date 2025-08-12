@@ -2,7 +2,7 @@
 % Please edit documentation in R/effect_blueprint.R
 \name{patina_blueprint}
 \alias{patina_blueprint}
-\title{Blueprint (cyanotype) style}
+\title{Blueprint style}
 \usage{
 patina_blueprint(
   img,
@@ -27,5 +27,13 @@ patina_blueprint(
 \item{line_soften}{Gaussian sigma for softening line mask.}
 }
 \description{
-Blueprint (cyanotype) style
+Creates a cyanotype blueprint effect with optional grid and paper texture.
+}
+\examples{
+\dontrun{
+if (requireNamespace("magick", quietly = TRUE)) {
+  img <- magick::image_blank(200, 200, "white")
+  patina_blueprint(img)
+}
+}
 }

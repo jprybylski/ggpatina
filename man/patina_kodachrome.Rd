@@ -2,7 +2,7 @@
 % Please edit documentation in R/effect_kodachrome.R
 \name{patina_kodachrome}
 \alias{patina_kodachrome}
-\title{Faded, overexposed Kodachrome vibe (warm cast + halation + grain)}
+\title{Kodachrome effect}
 \usage{
 patina_kodachrome(img, warmth = 0.25, fade = 0.25, bloom = 0.35, grain = 0.6)
 }
@@ -18,5 +18,13 @@ patina_kodachrome(img, warmth = 0.25, fade = 0.25, bloom = 0.35, grain = 0.6)
 \item{grain}{0..1 grain amount.}
 }
 \description{
-Faded, overexposed Kodachrome vibe (warm cast + halation + grain)
+Adds a warm cast, halation glow, and grain for a faded Kodachrome vibe.
+}
+\examples{
+\dontrun{
+if (requireNamespace("magick", quietly = TRUE)) {
+  img <- magick::image_blank(200, 200, "white")
+  patina_kodachrome(img)
+}
+}
 }

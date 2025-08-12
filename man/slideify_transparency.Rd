@@ -2,7 +2,7 @@
 % Please edit documentation in R/preset_transparency.R
 \name{slideify_transparency}
 \alias{slideify_transparency}
-\title{Transparency slide preset (chromatic offset, light leak, vignette, grain)}
+\title{Transparency slide preset}
 \usage{
 slideify_transparency(
   img,
@@ -33,5 +33,13 @@ slideify_transparency(
 \item{grain}{0..1 film grain strength}
 }
 \description{
-Transparency slide preset (chromatic offset, light leak, vignette, grain)
+Applies chromatic offset, light leaks, vignette, and grain for a vintage slide look.
+}
+\examples{
+\dontrun{
+if (requireNamespace("magick", quietly = TRUE)) {
+  img <- magick::image_blank(200, 200, "white")
+  slideify_transparency(img)
+}
+}
 }

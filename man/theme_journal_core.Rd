@@ -2,7 +2,7 @@
 % Please edit documentation in R/themes.R
 \name{theme_journal_core}
 \alias{theme_journal_core}
-\title{Journal-style theme core (print-friendly)}
+\title{Journal-style theme core}
 \usage{
 theme_journal_core(
   base_size = 11,
@@ -35,15 +35,15 @@ Defaults to 11. This does not change sizes you have already set explicitly.}
 A \code{ggplot2::theme} object.
 }
 \description{
-A small, conservative theme scaffold tuned for old-fashioned journals:
-clear axes, restrained grids, and white backgrounds. It avoids touching
-text sizes—only layout, lines, and colors—so it plays nicely with your
-own font helpers.
+Conservative scaffold for journals: clear axes, restrained grids, white
+backgrounds, and no font-size changes so it plays nicely with font helpers.
 }
 \examples{
+\dontrun{
 if (requireNamespace("ggplot2", quietly = TRUE)) {
   library(ggplot2)
   p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
   p + theme_journal_core()
+}
 }
 }

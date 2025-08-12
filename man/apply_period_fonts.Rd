@@ -2,7 +2,7 @@
 % Please edit documentation in R/period_fonts.R
 \name{apply_period_fonts}
 \alias{apply_period_fonts}
-\title{Apply period fonts in place (fonts only)}
+\title{Apply period fonts in place}
 \usage{
 apply_period_fonts(
   p,
@@ -32,4 +32,12 @@ Changes only the \code{family} of text elements on a ggplot, preserving size, fa
 colour, margins, and element classes. When an element is missing and needs to
 be created (scope = "all_listed"), it is cloned from the current/global theme
 first so sizes never reset.
+}
+\examples{
+\dontrun{
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
+  apply_period_fonts(p)
+}
+}
 }

@@ -24,5 +24,7 @@ A discrete fill scale.
 See \code{\link{scale_color_journal}} for details.
 }
 \examples{
+\dontrun{
 # p + scale_fill_journal("1900s")
+}
 }

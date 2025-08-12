@@ -11,7 +11,18 @@
   magick::image_fx(img, fx)
 }
 
-#' Photocopier double-pass misalignment (ghost + banding, line-safe, adjustable wash)
+#' Photocopier double-pass effect
+#'
+#' Adds a ghost offset, banding, and adjustable wash while protecting dark lines.
+#'
+#' @examples
+#' \dontrun{
+#' if (requireNamespace("magick", quietly = TRUE)) {
+#'   img <- magick::image_blank(200, 200, "white")
+#'   patina_photocopy(img)
+#' }
+#' }
+#'
 #' @param img magick image
 #' @param offset c(x,y) ghost offset in px
 #' @param ghost_opacity 0..1 opacity of the ghost pass

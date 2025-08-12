@@ -2,7 +2,7 @@
 % Please edit documentation in R/themes.R
 \name{scale_color_journal_continuous}
 \alias{scale_color_journal_continuous}
-\title{Continuous grayscale for journal themes (color)}
+\title{Continuous grayscale scale (color)}
 \usage{
 scale_color_journal_continuous(low = "#0f0f0f", high = "#adadad", ...)
 }
@@ -15,8 +15,10 @@ scale_color_journal_continuous(low = "#0f0f0f", high = "#adadad", ...)
 A continuous color scale.
 }
 \description{
-A simple two-stop gradient that prints/reproduces well with patinas.
+Two-stop gradient that prints well with journal patinas.
 }
 \examples{
+\dontrun{
 # p + scale_color_journal_continuous()
+}
 }

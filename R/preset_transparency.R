@@ -1,4 +1,15 @@
-#' Transparency slide preset (chromatic offset, light leak, vignette, grain)
+#' Transparency slide preset
+#'
+#' Applies chromatic offset, light leaks, vignette, and grain for a vintage
+#' slide look.
+#'
+#' @examples
+#' \dontrun{
+#' if (requireNamespace("magick", quietly = TRUE)) {
+#'   img <- magick::image_blank(200, 200, "white")
+#'   slideify_transparency(img)
+#' }
+#' }
 #'
 #' @param img magick image
 #' @param ca_px integer pixel shift for R/B channels (chromatic aberration)

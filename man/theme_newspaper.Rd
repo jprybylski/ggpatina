@@ -2,7 +2,7 @@
 % Please edit documentation in R/themes.R
 \name{theme_newspaper}
 \alias{theme_newspaper}
-\title{Newspaper-style theme (off-white, crisp axes, dashed majors)}
+\title{Newspaper theme}
 \usage{
 theme_newspaper(
   base_size = 11,
@@ -24,5 +24,14 @@ theme_newspaper(
 \item{grid_col}{major grid line color}
 }
 \description{
-Newspaper-style theme (off-white, crisp axes, dashed majors)
+Off-white page with crisp axes and dashed major grid lines.
+}
+\examples{
+\dontrun{
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
+    ggplot2::geom_point() +
+    theme_newspaper()
+}
+}
 }

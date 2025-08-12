@@ -2,7 +2,7 @@
 % Please edit documentation in R/period_fonts.R
 \name{period_font_theme}
 \alias{period_font_theme}
-\title{Period font theme (fonts only; clones sizes from current global theme)}
+\title{Period font theme}
 \usage{
 period_font_theme(
   era = c("journal-1930s", "journal-1960s", "slide-1970s", "slide-1980s",
@@ -26,5 +26,14 @@ missing listed elements by cloning a template).}
 A \code{ggplot2::theme} that changes only font families on listed elements.
 }
 \description{
-Period font theme (fonts only; clones sizes from current global theme)
+Returns a theme that swaps font families while preserving sizes from the current global theme.
+}
+\examples{
+\dontrun{
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
+    ggplot2::geom_point() +
+    period_font_theme()
+}
+}
 }

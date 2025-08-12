@@ -2,7 +2,7 @@
 % Please edit documentation in R/themes.R
 \name{theme_blueprint}
 \alias{theme_blueprint}
-\title{Blueprint theme (navy page, cyan lines, high-contrast text)}
+\title{Blueprint theme}
 \usage{
 theme_blueprint(
   base_size = 11,
@@ -24,5 +24,14 @@ theme_blueprint(
 \item{grid_col}{grid color}
 }
 \description{
-Blueprint theme (navy page, cyan lines, high-contrast text)
+Navy background with cyan lines and high-contrast text.
+}
+\examples{
+\dontrun{
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
+    ggplot2::geom_point() +
+    theme_blueprint()
+}
+}
 }

@@ -2,8 +2,7 @@
 % Please edit documentation in R/preset_journal_scan.R
 \name{scanify_journal}
 \alias{scanify_journal}
-\title{Old journal scan (sepia/mono, soft dither, paper, rotating top shadow)
-Shadow is drawn in a top margin first, then the whole page is rotated.}
+\title{Old journal scan preset}
 \usage{
 scanify_journal(
   img,
@@ -40,6 +39,13 @@ scanify_journal(
 \item{saturation}{If not sepia toned, color saturation}
 }
 \description{
-Old journal scan (sepia/mono, soft dither, paper, rotating top shadow)
-Shadow is drawn in a top margin first, then the whole page is rotated.
+Adds sepia tone, soft dither, paper texture, and a rotating top shadow. The shadow is drawn in a top margin before rotating the whole page.
+}
+\examples{
+\dontrun{
+if (requireNamespace("magick", quietly = TRUE)) {
+  img <- magick::image_blank(200, 200, "white")
+  scanify_journal(img)
+}
+}
 }

@@ -19,5 +19,7 @@ A \code{ggplot2::theme}.
 Stark, monochrome look with only Y major grid and a thin panel border.
 }
 \examples{
+\dontrun{
 # ggplot2::theme_set(theme_journal_1900s())
+}
 }
