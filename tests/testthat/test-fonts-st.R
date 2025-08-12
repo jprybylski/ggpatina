@@ -22,9 +22,10 @@ test_that("print_st prints without error when showtext available", {
 test_that("print_st errors without showtext", {
   skip_if_not_installed("ggplot2")
   p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
-  withr::with_libpaths(tempdir(), action = "replace", {
+  withr::with_libpaths(
+    tempdir(), action = "replace", include_site = FALSE, include_base = FALSE, {
     if ("showtext" %in% loadedNamespaces()) unloadNamespace("showtext")
-    expect_error(print_st(p), "Please install 'showtext'")
+    expect_error(print_st(p), "Please install 'showtext'", fixed = TRUE)
   })
 })
 
@@ -41,11 +42,13 @@ test_that("ggsave_st errors without showtext", {
   skip_if_not_installed("ggplot2")
   f <- tempfile(fileext = ".png")
   p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
-  withr::with_libpaths(tempdir(), action = "replace", {
+  withr::with_libpaths(
+    tempdir(), action = "replace", include_site = FALSE, include_base = FALSE, {
     if ("showtext" %in% loadedNamespaces()) unloadNamespace("showtext")
     expect_error(
       ggsave_st(f, plot = p, width = 1, height = 1, units = "in", dpi = 72),
-      "Please install 'showtext'"
+      "Please install 'showtext'",
+      fixed = TRUE
     )
   })
 })
