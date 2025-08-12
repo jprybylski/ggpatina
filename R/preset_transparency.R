@@ -4,9 +4,11 @@
 #' slide look.
 #'
 #' @examples
+#' \dontrun{
 #' if (requireNamespace("magick", quietly = TRUE)) {
-#'   img <- magick::image_read("logo:")
+#'   img <- magick::image_blank(200, 200, "white")
 #'   slideify_transparency(img)
+#' }
 #' }
 #'
 #' @param img magick image

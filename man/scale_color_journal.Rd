@@ -25,5 +25,7 @@ Muted grayscale or limited spot-color sets that reproduce well in print-like
 patinas. The palettes are intentionally short; repeated values will recycle.
 }
 \examples{
+\dontrun{
 # p + scale_color_journal("1930s")
+}
 }

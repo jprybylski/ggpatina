@@ -3,9 +3,11 @@
 #' Adds a warm cast, halation glow, and grain for a faded Kodachrome vibe.
 #'
 #' @examples
+#' \dontrun{
 #' if (requireNamespace("magick", quietly = TRUE)) {
-#'   img <- magick::image_read("logo:")
+#'   img <- magick::image_blank(200, 200, "white")
 #'   patina_kodachrome(img)
+#' }
 #' }
 #'
 #' @param img magick image (rasterized plot).

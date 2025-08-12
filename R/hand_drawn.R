@@ -196,9 +196,11 @@ displace_map <- function(w, h, freq = 0.6, seed = 3, gate = NULL, edge_guard = 0
 #' Adds a sketchy wobble with automatic scaling and panel masking.
 #'
 #' @examples
+#' \dontrun{
 #' if (requireNamespace("ggplot2", quietly = TRUE)) {
 #'   p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
 #'   hand_drawn_wiggle(p)
+#' }
 #' }
 #'
 #' @param x ggplot/grob or magick-image

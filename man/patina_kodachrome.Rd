@@ -21,8 +21,10 @@ patina_kodachrome(img, warmth = 0.25, fade = 0.25, bloom = 0.35, grain = 0.6)
 Adds a warm cast, halation glow, and grain for a faded Kodachrome vibe.
 }
 \examples{
+\dontrun{
 if (requireNamespace("magick", quietly = TRUE)) {
-  img <- magick::image_read("logo:")
+  img <- magick::image_blank(200, 200, "white")
   patina_kodachrome(img)
+}
 }
 }

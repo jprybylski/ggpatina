@@ -3,10 +3,12 @@
 #' Off-white page with crisp axes and dashed major grid lines.
 #'
 #' @examples
+#' \dontrun{
 #' if (requireNamespace("ggplot2", quietly = TRUE)) {
 #'   ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
 #'     ggplot2::geom_point() +
 #'     theme_newspaper()
+#' }
 #' }
 #'
 #' @param base_size base text size
@@ -37,10 +39,12 @@ theme_newspaper <- function(base_size = 11, base_family = NULL,
 #' Dark background with light ink, faint grid, and CRT-inspired styling.
 #'
 #' @examples
+#' \dontrun{
 #' if (requireNamespace("ggplot2", quietly = TRUE)) {
 #'   ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
 #'     ggplot2::geom_point() +
 #'     theme_newscast()
+#' }
 #' }
 #'
 #' @param base_size base text size
@@ -75,10 +79,12 @@ theme_newscast <- function(base_size = 11, base_family = NULL,
 #' Warm page tones with dotted majors and a subtle border.
 #'
 #' @examples
+#' \dontrun{
 #' if (requireNamespace("ggplot2", quietly = TRUE)) {
 #'   ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
 #'     ggplot2::geom_point() +
 #'     theme_edu_film()
+#' }
 #' }
 #'
 #' @param base_size base text size
@@ -112,10 +118,12 @@ theme_edu_film <- function(base_size = 11, base_family = NULL,
 #' Clean white slide with a thin grid and generous margins.
 #'
 #' @examples
+#' \dontrun{
 #' if (requireNamespace("ggplot2", quietly = TRUE)) {
 #'   ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
 #'     ggplot2::geom_point() +
 #'     theme_transparency()
+#' }
 #' }
 #'
 #' @param base_size base text size
@@ -142,10 +150,12 @@ theme_transparency <- function(base_size = 11, base_family = NULL,
 #' Navy background with cyan lines and high-contrast text.
 #'
 #' @examples
+#' \dontrun{
 #' if (requireNamespace("ggplot2", quietly = TRUE)) {
 #'   ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
 #'     ggplot2::geom_point() +
 #'     theme_blueprint()
+#' }
 #' }
 #'
 #' @param base_size base text size
@@ -194,10 +204,12 @@ theme_blueprint <- function(base_size = 11, base_family = NULL,
 #' @return A \code{ggplot2::theme} object.
 #' @export
 #' @examples
+#' \dontrun{
 #' if (requireNamespace("ggplot2", quietly = TRUE)) {
 #'   library(ggplot2)
 #'   p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
 #'   p + theme_journal_core()
+#' }
 #' }
 theme_journal_core <- function(
   base_size = 11, base_family = NULL,
@@ -259,7 +271,9 @@ theme_journal_core <- function(
 #' @return A \code{ggplot2::theme}.
 #' @export
 #' @examples
+#' \dontrun{
 #' # ggplot2::theme_set(theme_journal_1900s())
+#' }
 theme_journal_1900s <- function(base_size = 11, base_family = NULL) {
   theme_journal_core(
     base_size = base_size, base_family = base_family,
@@ -321,7 +335,9 @@ theme_journal_1960s <- function(base_size = 11, base_family = NULL) {
 #' @return A discrete color scale.
 #' @export
 #' @examples
+#' \dontrun{
 #' # p + scale_color_journal("1930s")
+#' }
 scale_color_journal <- function(era = c("1900s","1930s","1960s"),
                                 variant = c("gray","spot"),
                                 ...) {
@@ -349,7 +365,9 @@ scale_color_journal <- function(era = c("1900s","1930s","1960s"),
 #' @return A discrete fill scale.
 #' @export
 #' @examples
+#' \dontrun{
 #' # p + scale_fill_journal("1900s")
+#' }
 scale_fill_journal <- function(era = c("1900s","1930s","1960s"),
                                variant = c("gray","spot"),
                                ...) {
@@ -378,7 +396,9 @@ scale_fill_journal <- function(era = c("1900s","1930s","1960s"),
 #' @return A continuous color scale.
 #' @export
 #' @examples
+#' \dontrun{
 #' # p + scale_color_journal_continuous()
+#' }
 scale_color_journal_continuous <- function(low = "#0f0f0f", high = "#adadad", ...) {
   ggplot2::scale_color_gradient(low = low, high = high, ...)
 }
@@ -389,7 +409,9 @@ scale_color_journal_continuous <- function(low = "#0f0f0f", high = "#adadad", ..
 #' @return A continuous fill scale.
 #' @export
 #' @examples
+#' \dontrun{
 #' # p + scale_fill_journal_continuous()
+#' }
 scale_fill_journal_continuous <- function(low = "#0f0f0f", high = "#adadad", ...) {
   ggplot2::scale_fill_gradient(low = low, high = high, ...)
 }

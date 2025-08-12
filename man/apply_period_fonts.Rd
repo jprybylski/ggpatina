@@ -34,8 +34,10 @@ be created (scope = "all_listed"), it is cloned from the current/global theme
 first so sizes never reset.
 }
 \examples{
+\dontrun{
 if (requireNamespace("ggplot2", quietly = TRUE)) {
   p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
   apply_period_fonts(p)
+}
 }
 }

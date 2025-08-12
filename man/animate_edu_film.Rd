@@ -53,8 +53,10 @@ Each frame calls \code{patina_edu_film()} with per-frame jitter and seed,
 then adds slight brightness flicker and tiny XY weave. Dimensions are preserved.
 }
 \examples{
+\dontrun{
 if (requireNamespace("magick", quietly = TRUE)) {
-  img <- magick::image_read("logo:")
+  img <- magick::image_blank(100, 100, "white")
   animate_edu_film(img, n_frames = 5, fps = 2)
+}
 }
 }

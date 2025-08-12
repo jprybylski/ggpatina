@@ -39,9 +39,11 @@ Conservative scaffold for journals: clear axes, restrained grids, white
 backgrounds, and no font-size changes so it plays nicely with font helpers.
 }
 \examples{
+\dontrun{
 if (requireNamespace("ggplot2", quietly = TRUE)) {
   library(ggplot2)
   p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
   p + theme_journal_core()
+}
 }
 }

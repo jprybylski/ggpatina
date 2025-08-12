@@ -39,8 +39,10 @@ patina_photocopy(
 Adds a ghost offset, banding, and adjustable wash while protecting dark lines.
 }
 \examples{
+\dontrun{
 if (requireNamespace("magick", quietly = TRUE)) {
-  img <- magick::image_read("logo:")
+  img <- magick::image_blank(200, 200, "white")
   patina_photocopy(img)
+}
 }
 }

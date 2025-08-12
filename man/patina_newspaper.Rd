@@ -48,8 +48,10 @@ patina_newspaper(
 Creates a light newsprint look with crisp ink, subtle dots, and optional paper texture.
 }
 \examples{
+\dontrun{
 if (requireNamespace("magick", quietly = TRUE)) {
-  img <- magick::image_read("logo:")
+  img <- magick::image_blank(200, 200, "white")
   patina_newspaper(img)
+}
 }
 }

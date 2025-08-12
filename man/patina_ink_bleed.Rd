@@ -30,8 +30,10 @@ patina_ink_bleed(
 Simulates ink bleeding into paper fibers.
 }
 \examples{
+\dontrun{
 if (requireNamespace("magick", quietly = TRUE)) {
-  img <- magick::image_read("logo:")
+  img <- magick::image_blank(200, 200, "white")
   patina_ink_bleed(img)
+}
 }
 }

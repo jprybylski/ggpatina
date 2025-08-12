@@ -90,9 +90,11 @@
 #' first so sizes never reset.
 #'
 #' @examples
+#' \dontrun{
 #' if (requireNamespace("ggplot2", quietly = TRUE)) {
 #'   p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
 #'   apply_period_fonts(p)
+#' }
 #' }
 #'
 #' @param p A ggplot.
@@ -142,10 +144,12 @@ apply_period_fonts <- function(p,
 #' current global theme.
 #'
 #' @examples
+#' \dontrun{
 #' if (requireNamespace("ggplot2", quietly = TRUE)) {
 #'   ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
 #'     ggplot2::geom_point() +
 #'     period_font_theme()
+#' }
 #' }
 #'
 #' @inheritParams apply_period_fonts

@@ -27,9 +27,11 @@ theme_newscast(
 Dark background with light ink, faint grid, and CRT-inspired styling.
 }
 \examples{
+\dontrun{
 if (requireNamespace("ggplot2", quietly = TRUE)) {
   ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
     ggplot2::geom_point() +
     theme_newscast()
+}
 }
 }

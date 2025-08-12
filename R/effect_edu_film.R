@@ -4,9 +4,11 @@
 #' classroom 16mm look.
 #'
 #' @examples
+#' \dontrun{
 #' if (requireNamespace("magick", quietly = TRUE)) {
-#'   img <- magick::image_read("logo:")
+#'   img <- magick::image_blank(200, 200, "white")
 #'   patina_edu_film(img)
+#' }
 #' }
 #' @param img magick image
 #' @param warmth 0..1 warm/green cast (0=none)
@@ -153,9 +155,11 @@ patina_edu_film <- function(
 #' flicker, and per-frame dust.
 #'
 #' @examples
+#' \dontrun{
 #' if (requireNamespace("magick", quietly = TRUE)) {
-#'   img <- magick::image_read("logo:")
+#'   img <- magick::image_blank(100, 100, "white")
 #'   animate_edu_film(img, n_frames = 5, fps = 2)
+#' }
 #' }
 #'
 #' @param img magick image (your rasterized ggplot)

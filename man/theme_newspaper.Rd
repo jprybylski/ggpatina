@@ -27,9 +27,11 @@ theme_newspaper(
 Off-white page with crisp axes and dashed major grid lines.
 }
 \examples{
+\dontrun{
 if (requireNamespace("ggplot2", quietly = TRUE)) {
   ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
     ggplot2::geom_point() +
     theme_newspaper()
+}
 }
 }

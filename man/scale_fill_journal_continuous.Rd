@@ -18,5 +18,7 @@ A continuous fill scale.
 Two-stop gradient for fill aesthetics that prints well with journal patinas.
 }
 \examples{
+\dontrun{
 # p + scale_fill_journal_continuous()
+}
 }

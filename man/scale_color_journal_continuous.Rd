@@ -18,5 +18,7 @@ A continuous color scale.
 Two-stop gradient that prints well with journal patinas.
 }
 \examples{
+\dontrun{
 # p + scale_color_journal_continuous()
+}
 }

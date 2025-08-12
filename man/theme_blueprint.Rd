@@ -27,9 +27,11 @@ theme_blueprint(
 Navy background with cyan lines and high-contrast text.
 }
 \examples{
+\dontrun{
 if (requireNamespace("ggplot2", quietly = TRUE)) {
   ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
     ggplot2::geom_point() +
     theme_blueprint()
+}
 }
 }

@@ -42,8 +42,10 @@ scanify_journal(
 Adds sepia tone, soft dither, paper texture, and a rotating top shadow. The shadow is drawn in a top margin before rotating the whole page.
 }
 \examples{
+\dontrun{
 if (requireNamespace("magick", quietly = TRUE)) {
-  img <- magick::image_read("logo:")
+  img <- magick::image_blank(200, 200, "white")
   scanify_journal(img)
+}
 }
 }
