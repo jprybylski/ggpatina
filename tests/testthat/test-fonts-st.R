@@ -22,10 +22,15 @@ test_that("print_st prints without error when showtext available", {
 test_that("print_st errors without showtext", {
   skip_if_not_installed("ggplot2")
   p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
-  withr::with_libpaths(tempdir(), {
-    if ("showtext" %in% loadedNamespaces()) unloadNamespace("showtext")
-    expect_error(print_st(p), "Please install 'showtext'", fixed = TRUE)
-  }, action = "replace")
+  if ("showtext" %in% loadedNamespaces()) unloadNamespace("showtext")
+  with_mocked_bindings(
+    requireNamespace = function(pkg, ...) {
+      if (pkg == "showtext") return(FALSE)
+      base::requireNamespace(pkg, ...)
+    }, {
+      expect_error(print_st(p), "Please install 'showtext'", fixed = TRUE)
+    }, .package = "base"
+  )
 })
 
 test_that("ggsave_st saves file when showtext available", {
@@ -41,12 +46,17 @@ test_that("ggsave_st errors without showtext", {
   skip_if_not_installed("ggplot2")
   f <- tempfile(fileext = ".png")
   p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
-  withr::with_libpaths(tempdir(), {
-    if ("showtext" %in% loadedNamespaces()) unloadNamespace("showtext")
-    expect_error(
-      ggsave_st(f, plot = p, width = 1, height = 1, units = "in", dpi = 72),
-      "Please install 'showtext'",
-      fixed = TRUE
-    )
-  }, action = "replace")
+  if ("showtext" %in% loadedNamespaces()) unloadNamespace("showtext")
+  with_mocked_bindings(
+    requireNamespace = function(pkg, ...) {
+      if (pkg == "showtext") return(FALSE)
+      base::requireNamespace(pkg, ...)
+    }, {
+      expect_error(
+        ggsave_st(f, plot = p, width = 1, height = 1, units = "in", dpi = 72),
+        "Please install 'showtext'",
+        fixed = TRUE
+      )
+    }, .package = "base"
+  )
 })
