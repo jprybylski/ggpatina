@@ -22,8 +22,10 @@ This package adds lightweight, composable *patina* filters (on
 ## Installation
 
 ``` r
-# install.packages("ggpatina")
+# Install released version from CRAN
+install.packages("ggpatina")
 
+# Install development version from GitHub
 pak::pak("jprybylski/ggpatina")
 ```
 

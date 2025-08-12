@@ -193,8 +193,15 @@ with_showtext_auto <- function(expr) {
 #'
 #' Scopes `showtext::showtext_auto()` to this call only so that font rendering
 #' is enabled for the duration of the print and then restored.
-#'
+#' 
 #' @param p A ggplot object to print.
+#' @return The input plot, invisibly.
+#' @examples
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
+#'     ggplot2::geom_point()
+#'   print_st(p)
+#' }
 #' @export
 print_st <- function(p) with_showtext_auto(print(p))
 
@@ -202,8 +209,14 @@ print_st <- function(p) with_showtext_auto(print(p))
 #'
 #' Wraps [ggplot2::ggsave()] while activating showtext only for this call,
 #' ensuring font rendering without leaving global side effects.
-#'
+#' 
 #' @inheritParams ggplot2::ggsave
+#' @return The file path, invisibly.
+#' @examples
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   p <- ggplot2::qplot(wt, mpg, data = mtcars)
+#'   ggsave_st("example.png", p)
+#' }
 #' @export
 ggsave_st <- function(filename, plot, ...) with_showtext_auto(
   ggplot2::ggsave(filename = filename, plot = plot, ...)

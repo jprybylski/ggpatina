@@ -23,6 +23,7 @@
 #' @param exposure overall brightness multiplier (~0.95–1.15)
 #' @param highlight_lift 0..1 brighten only very light backgrounds
 #' @param line_gain 0..1 deepen only the ink strokes after effects
+#' @return A `magick-image` with a light newsprint effect.
 #' @export
 patina_newspaper <- function(
   img,

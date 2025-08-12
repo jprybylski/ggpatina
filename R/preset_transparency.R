@@ -19,6 +19,7 @@
 #' @param vignette_feather 0.3..3 falloff softness (higher = softer)
 #' @param skew keystone factor (0..~0.02)
 #' @param grain 0..1 film grain strength
+#' @return A `magick-image` with a vintage slide appearance.
 #' @export
 slideify_transparency <- function(img,
                                   ca_px = 1L,

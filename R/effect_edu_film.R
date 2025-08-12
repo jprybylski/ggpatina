@@ -22,6 +22,7 @@
 #' @param dust_mix 0..1 fraction of black specks when dust_polarity="mixed"
 #' @param seed optional integer to make dust/scratches reproducible
 #' @param scratches integer number of vertical scratches to draw (0 = none)
+#' @return A `magick-image` with an educational film look.
 #' @export
 patina_edu_film <- function(
   img,

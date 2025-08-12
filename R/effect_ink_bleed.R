@@ -16,6 +16,7 @@
 #' @param strength 0..1 overall opacity of the bleed layer
 #' @param bleed_color bleed/tint color
 #' @param paper_texture optional texture laid UNDER the plot
+#' @return A `magick-image` with an ink bleed effect.
 #' @export
 patina_ink_bleed <- function(img,
                              radius = 2, expand = 1,

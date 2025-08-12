@@ -17,6 +17,7 @@
 #' @param grid_px Grid spacing in pixels.
 #' @param paper_texture Optional paper texture.
 #' @param line_soften Gaussian sigma for softening line mask.
+#' @return A `magick-image` with a blueprint effect.
 #' @export
 patina_blueprint <- function(img, bg = "#0e4a7b", grid = FALSE, grid_px = 48,
                              paper_texture = NULL, line_soften = 0.5) {

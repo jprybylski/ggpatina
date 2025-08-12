@@ -15,6 +15,7 @@
 #' @param fade 0..1 slight highlight lift.
 #' @param bloom 0..1 halation glow strength (around strokes).
 #' @param grain 0..1 grain amount.
+#' @return A `magick-image` with a faded Kodachrome effect.
 #' @export
 patina_kodachrome <- function(img, warmth = 0.25, fade = 0.25, bloom = 0.35, grain = 0.6) {
   stopifnot(inherits(img, "magick-image"))
