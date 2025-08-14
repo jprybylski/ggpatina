@@ -1,7 +1,7 @@
 Package: ggpatina
 Type: Package
 Title: Period Aesthetics and Analog Aging Effects for Figures
-Version: 0.0.1
+Version: 0.1.0
 Authors@R:
     person("John", "Prybylski", , "jprybylski@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-5802-0539"))
