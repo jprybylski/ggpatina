@@ -29,7 +29,8 @@
 #' @noRd
 .set_family <- function(el, family) {
   if (is.null(el) || inherits(el, "element_blank")) return(el)
-  if ("family" %in% names(el)) el$family <- family
+  # ggplot2 4.0 elements are S7 objects without names(), but still support `$family`
+  try({ el$family <- family }, silent = TRUE)
   el
 }
 
