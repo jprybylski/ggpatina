@@ -20,6 +20,9 @@ theme_transparency(
 
 \item{grid_col}{grid color}
 }
+\value{
+A \code{ggplot2::theme}.
+}
 \description{
 Clean white slide with a thin grid and generous margins.
 }
@@ -31,4 +34,5 @@ if (requireNamespace("ggplot2", quietly = TRUE)) {
     theme_transparency()
 }
 }
+
 }

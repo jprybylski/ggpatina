@@ -56,4 +56,5 @@ if (requireNamespace("ggplot2", quietly = TRUE)) {
   hand_drawn_wiggle(p)
 }
 }
+
 }

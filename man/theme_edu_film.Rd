@@ -23,6 +23,9 @@ theme_edu_film(
 
 \item{grid_col}{major grid color}
 }
+\value{
+A \code{ggplot2::theme}.
+}
 \description{
 Warm page tones with dotted majors and a subtle border.
 }
@@ -34,4 +37,5 @@ if (requireNamespace("ggplot2", quietly = TRUE)) {
     theme_edu_film()
 }
 }
+
 }

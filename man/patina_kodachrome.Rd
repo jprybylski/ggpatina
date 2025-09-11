@@ -17,6 +17,9 @@ patina_kodachrome(img, warmth = 0.25, fade = 0.25, bloom = 0.35, grain = 0.6)
 
 \item{grain}{0..1 grain amount.}
 }
+\value{
+A \code{magick-image} with a faded Kodachrome effect.
+}
 \description{
 Adds a warm cast, halation glow, and grain for a faded Kodachrome vibe.
 }
@@ -27,4 +30,5 @@ if (requireNamespace("magick", quietly = TRUE)) {
   patina_kodachrome(img)
 }
 }
+
 }

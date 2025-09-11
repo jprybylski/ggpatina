@@ -26,6 +26,9 @@ patina_blueprint(
 
 \item{line_soften}{Gaussian sigma for softening line mask.}
 }
+\value{
+A \code{magick-image} with a blueprint effect.
+}
 \description{
 Creates a cyanotype blueprint effect with optional grid and paper texture.
 }
@@ -36,4 +39,5 @@ if (requireNamespace("magick", quietly = TRUE)) {
   patina_blueprint(img)
 }
 }
+
 }

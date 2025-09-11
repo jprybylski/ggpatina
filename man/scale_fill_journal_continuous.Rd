@@ -15,7 +15,7 @@ scale_fill_journal_continuous(low = "#0f0f0f", high = "#adadad", ...)
 A continuous fill scale.
 }
 \description{
-Two-stop gradient for fill aesthetics that prints well with journal patinas.
+Continuous grayscale scale (fill)
 }
 \examples{
 \dontrun{

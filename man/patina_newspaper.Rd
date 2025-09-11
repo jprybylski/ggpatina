@@ -44,8 +44,12 @@ patina_newspaper(
 
 \item{line_gain}{0..1 deepen only the ink strokes after effects}
 }
+\value{
+A \code{magick-image} with a light newsprint effect.
+}
 \description{
-Creates a light newsprint look with crisp ink, subtle dots, and optional paper texture.
+Creates a light newsprint look with crisp ink, subtle dots, and optional
+paper texture.
 }
 \examples{
 \dontrun{
@@ -54,4 +58,5 @@ if (requireNamespace("magick", quietly = TRUE)) {
   patina_newspaper(img)
 }
 }
+
 }

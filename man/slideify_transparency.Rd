@@ -32,8 +32,12 @@ slideify_transparency(
 
 \item{grain}{0..1 film grain strength}
 }
+\value{
+A \code{magick-image} with a vintage slide appearance.
+}
 \description{
-Applies chromatic offset, light leaks, vignette, and grain for a vintage slide look.
+Applies chromatic offset, light leaks, vignette, and grain for a vintage
+slide look.
 }
 \examples{
 \dontrun{
@@ -42,4 +46,5 @@ if (requireNamespace("magick", quietly = TRUE)) {
   slideify_transparency(img)
 }
 }
+
 }

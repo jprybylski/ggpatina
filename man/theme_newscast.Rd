@@ -23,6 +23,9 @@ theme_newscast(
 
 \item{grid_col}{grid color (low alpha)}
 }
+\value{
+A \code{ggplot2::theme}.
+}
 \description{
 Dark background with light ink, faint grid, and CRT-inspired styling.
 }
@@ -34,4 +37,5 @@ if (requireNamespace("ggplot2", quietly = TRUE)) {
     theme_newscast()
 }
 }
+
 }

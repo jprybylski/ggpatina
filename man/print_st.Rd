@@ -9,7 +9,17 @@ print_st(p)
 \arguments{
 \item{p}{A ggplot object to print.}
 }
+\value{
+The input plot, invisibly.
+}
 \description{
 Scopes \code{showtext::showtext_auto()} to this call only so that font rendering
 is enabled for the duration of the print and then restored.
+}
+\examples{
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
+    ggplot2::geom_point()
+  print_st(p)
+}
 }

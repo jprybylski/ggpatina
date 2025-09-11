@@ -44,8 +44,12 @@ patina_edu_film(
 
 \item{scratches}{integer number of vertical scratches to draw (0 = none)}
 }
+\value{
+A \code{magick-image} with an educational film look.
+}
 \description{
-Adds a warm/green cast, heavy grain, dust, scratches, and slight weave for a classroom 16mm look.
+Adds a warm/green cast, heavy grain, dust, scratches, and slight weave for a
+classroom 16mm look.
 }
 \examples{
 \dontrun{

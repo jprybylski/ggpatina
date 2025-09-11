@@ -21,3 +21,10 @@ A \code{magick-image}.
 \description{
 Render a ggplot/grob/gtable to a magick image
 }
+\examples{
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
+    ggplot2::geom_point()
+  as_magick(p)
+}
+}

@@ -47,8 +47,12 @@ patina_newscast(
 
 \item{corner_margin}{fraction margin from edges when placing the corner region}
 }
+\value{
+A \code{magick-image} with a vintage newscast look.
+}
 \description{
-Adds scanlines, chroma bleed, tube glow, vignette, and noise to mimic a CRT broadcast.
+Adds scanlines, chroma bleed, tube glow, vignette, and noise to mimic a CRT
+broadcast.
 }
 \examples{
 \dontrun{
@@ -57,4 +61,5 @@ if (requireNamespace("magick", quietly = TRUE)) {
   patina_newscast(img)
 }
 }
+
 }

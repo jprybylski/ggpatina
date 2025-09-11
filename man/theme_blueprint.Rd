@@ -23,6 +23,9 @@ theme_blueprint(
 
 \item{grid_col}{grid color}
 }
+\value{
+A \code{ggplot2::theme}.
+}
 \description{
 Navy background with cyan lines and high-contrast text.
 }
@@ -34,4 +37,5 @@ if (requireNamespace("ggplot2", quietly = TRUE)) {
     theme_blueprint()
 }
 }
+
 }

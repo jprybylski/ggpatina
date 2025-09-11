@@ -48,9 +48,8 @@ animate_edu_film(
 an animated magick-image (GIF). If \code{write_gif} is provided, the file is also written.
 }
 \description{
-Builds an animated GIF of a short 16mm instructional clip with gate weave, flicker, and per-frame dust.
-Each frame calls \code{patina_edu_film()} with per-frame jitter and seed,
-then adds slight brightness flicker and tiny XY weave. Dimensions are preserved.
+Builds an animated GIF of a short 16mm instructional clip with gate weave,
+flicker, and per-frame dust.
 }
 \examples{
 \dontrun{
@@ -59,4 +58,5 @@ if (requireNamespace("magick", quietly = TRUE)) {
   animate_edu_film(img, n_frames = 5, fps = 2)
 }
 }
+
 }

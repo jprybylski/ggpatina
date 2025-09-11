@@ -12,3 +12,5 @@
 ^Meta$
 ^data-raw$
 ^cran-comments\.md$
+^images$
+^vignettes/articles$

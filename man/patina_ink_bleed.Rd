@@ -26,6 +26,9 @@ patina_ink_bleed(
 
 \item{paper_texture}{optional texture laid UNDER the plot}
 }
+\value{
+A \code{magick-image} with an ink bleed effect.
+}
 \description{
 Simulates ink bleeding into paper fibers.
 }
@@ -36,4 +39,5 @@ if (requireNamespace("magick", quietly = TRUE)) {
   patina_ink_bleed(img)
 }
 }
+
 }

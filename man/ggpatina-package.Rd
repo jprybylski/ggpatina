@@ -4,12 +4,22 @@
 \name{ggpatina-package}
 \alias{ggpatina}
 \alias{ggpatina-package}
-\title{ggpatina: Period Aesthetics and Analog Aging Effects for ggplot}
+\title{ggpatina: Period Aesthetics and Analog Aging Effects for Figures}
 \description{
-Apply period-inspired fonts and analog-aging visual effects to ggplot figures. Includes presets for transparency slide and old-journal scan looks, plus ink bleed, Kodachrome-style fade, photocopy misalignment, and a blueprint (cyanotype) style.
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
+Provides period-inspired fonts and analog-aging visual effects for figures. Includes presets for transparency slides and old journal scans, plus ink bleed, Kodachrome-style fade, photocopy misalignment, and a blueprint (cyanotype) style.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://jprybylski.github.io/ggpatina/}
+  \item \url{https://github.com/jprybylski/ggpatina}
+}
+
 }
 \author{
-\strong{Maintainer}: John Prybylski \email{jprybylski@gmail.com} (\href{https://orcid.org/0000-0001-5802-0539}{ORCID})
+\strong{Maintainer}: John Prybylski \email{jprybylski@gmail.com} (\href{https://orcid.org/0000-0001-5802-0539}{ORCID}) [copyright holder]
 
 }
 \keyword{internal}

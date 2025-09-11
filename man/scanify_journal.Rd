@@ -38,8 +38,12 @@ scanify_journal(
 
 \item{saturation}{If not sepia toned, color saturation}
 }
+\value{
+A \code{magick-image} with an aged journal appearance.
+}
 \description{
-Adds sepia tone, soft dither, paper texture, and a rotating top shadow. The shadow is drawn in a top margin before rotating the whole page.
+Adds sepia tone, soft dither, paper texture, and a rotating top shadow.
+The shadow is drawn in a top margin before rotating the whole page.
 }
 \examples{
 \dontrun{
@@ -48,4 +52,5 @@ if (requireNamespace("magick", quietly = TRUE)) {
   scanify_journal(img)
 }
 }
+
 }

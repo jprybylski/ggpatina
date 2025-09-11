@@ -23,6 +23,9 @@ theme_newspaper(
 
 \item{grid_col}{major grid line color}
 }
+\value{
+A \code{ggplot2::theme}.
+}
 \description{
 Off-white page with crisp axes and dashed major grid lines.
 }
@@ -34,4 +37,5 @@ if (requireNamespace("ggplot2", quietly = TRUE)) {
     theme_newspaper()
 }
 }
+
 }

@@ -40,4 +40,5 @@ if (requireNamespace("ggplot2", quietly = TRUE)) {
   apply_period_fonts(p)
 }
 }
+
 }

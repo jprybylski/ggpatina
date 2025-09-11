@@ -14,7 +14,16 @@ ggsave_st(filename, plot, ...)
 \item{...}{Other arguments passed on to the graphics device function,
 as specified by \code{device}.}
 }
+\value{
+The file path, invisibly.
+}
 \description{
 Wraps \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}} while activating showtext only for this call,
 ensuring font rendering without leaving global side effects.
+}
+\examples{
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  p <- ggplot2::qplot(wt, mpg, data = mtcars)
+  ggsave_st("example.png", p)
+}
 }

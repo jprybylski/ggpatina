@@ -36,7 +36,9 @@ Suggests:
     svglite,
     xml2,
     rsvg,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    learnr
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 URL: https://jprybylski.github.io/ggpatina/, https://github.com/jprybylski/ggpatina
+Config/Needs/website: rmarkdown

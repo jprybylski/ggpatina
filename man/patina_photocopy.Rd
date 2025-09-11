@@ -35,6 +35,9 @@ patina_photocopy(
 
 \item{contrast_pop}{strength of final sigmoid contrast (0 = none)}
 }
+\value{
+A \code{magick-image} with a photocopier double-pass effect.
+}
 \description{
 Adds a ghost offset, banding, and adjustable wash while protecting dark lines.
 }
@@ -45,4 +48,5 @@ if (requireNamespace("magick", quietly = TRUE)) {
   patina_photocopy(img)
 }
 }
+
 }
