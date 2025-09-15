@@ -185,8 +185,12 @@ period_font_theme <- function(era = c("journal-1930s","journal-1960s","slide-197
 with_showtext_auto <- function(expr) {
   if (!requireNamespace("showtext", quietly = TRUE))
     stop("Please install 'showtext'.")
-  withr::defer(showtext::showtext_auto(FALSE), parent.frame())
+  withr::defer({
+    showtext::showtext_auto(FALSE)
+    showtext::showtext_opts() #  reset
+    }, parent.frame())
   showtext::showtext_auto(TRUE)
+  showtext::showtext_opts(dpi = 300) # match ggplot2 default
   force(expr)
 }
 
@@ -194,7 +198,7 @@ with_showtext_auto <- function(expr) {
 #'
 #' Scopes `showtext::showtext_auto()` to this call only so that font rendering
 #' is enabled for the duration of the print and then restored.
-#' 
+#'
 #' @param p A ggplot object to print.
 #' @return The input plot, invisibly.
 #' @examples
@@ -210,7 +214,7 @@ print_st <- function(p) with_showtext_auto(print(p))
 #'
 #' Wraps [ggplot2::ggsave()] while activating showtext only for this call,
 #' ensuring font rendering without leaving global side effects.
-#' 
+#'
 #' @inheritParams ggplot2::ggsave
 #' @return The file path, invisibly.
 #' @examples
