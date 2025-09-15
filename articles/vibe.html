@@ -65,10 +65,12 @@
 
     
     
-<p>#(WIP)</p>
 <div class="section level2">
-<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+<h2 id="wip">(WIP)<a class="anchor" aria-label="anchor" href="#wip"></a>
 </h2>
+<div class="section level3">
+<h3 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h3>
 <p>This package was developed using <a href="https://en.wikipedia.org/wiki/Vibe_coding" class="external-link">vibe coding</a>. While
 there are many approaches to building a package using AI, because this
 started as a basic “is this possible?” question to ChatGPT’s new
@@ -87,9 +89,9 @@ I was seeking. I wouldn’t consider this project an endorsement of AI or
 coding, but as a tinkerer I can’t resist trying a new (or improved)
 tool.</p>
 </div>
-<div class="section level2">
-<h2 id="inception">Inception<a class="anchor" aria-label="anchor" href="#inception"></a>
-</h2>
+<div class="section level3">
+<h3 id="inception">Inception<a class="anchor" aria-label="anchor" href="#inception"></a>
+</h3>
 <p>I have always been a fan of how screenshots or scanned figures from
 old journals looked. Or how plots look after someone uses an image they
 took of of slide containing that plot elsewhere (<a href="https://www.mrowe.co.za/blog/2023/08/a-few-thoughts-on-taking-photos-of-slides-at-conferences/" class="external-link">speaking
@@ -129,9 +131,9 @@ fully skeptical</a> of the code produced by these tools, but I also
 enjoy using ChatGPR for brainstorming so I wanted to give this model a
 go.</p>
 </div>
-<div class="section level2">
-<h2 id="development">Development<a class="anchor" aria-label="anchor" href="#development"></a>
-</h2>
+<div class="section level3">
+<h3 id="development">Development<a class="anchor" aria-label="anchor" href="#development"></a>
+</h3>
 <p>It started with a question that had an obvious answer:</p>
 <blockquote>
 <p>Is it possible to develop an R package that takes ggplot grobs and
@@ -191,19 +193,19 @@ ggpatina.zip
 </p>
 </div>
 </div>
-<div class="section level2">
-<h2 id="refinement">Refinement<a class="anchor" aria-label="anchor" href="#refinement"></a>
-</h2>
-<p>As much as I love the 1974 <em>Motor Trends</em> analysis of 32 cars
+<div class="section level3">
+<h3 id="refinement">Refinement<a class="anchor" aria-label="anchor" href="#refinement"></a>
+</h3>
+<p>As much as I love the <em>Motor Trends</em> analysis of 32 cars
 released from 1972-1974, I’ll go ahead and use <code>penguins</code> for
 this section. Just to switch it up.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">peng_p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">penguins</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">flipper_len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">bill_len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">220</span>, y <span class="op">=</span> <span class="fl">28</span>, label <span class="op">=</span> <span class="st">"Bill Length, mm"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">220</span>, y <span class="op">=</span> <span class="fl">28</span>, label <span class="op">=</span> <span class="st">"Bill Length, mm"</span><span class="op">)</span>, size<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">25</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">bill_dep</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">220</span>, y <span class="op">=</span> <span class="fl">22</span>, label <span class="op">=</span> <span class="st">"Bill Depth, mm"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">220</span>, y <span class="op">=</span> <span class="fl">22</span>, label <span class="op">=</span> <span class="st">"Bill Depth, mm"</span><span class="op">)</span>, size<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
 <span>        x <span class="op">=</span> <span class="st">"Flipper Length, mm"</span>,</span>
 <span>        y <span class="op">=</span> <span class="st">""</span></span>
@@ -212,8 +214,9 @@ this section. Just to switch it up.</p>
 <code><a href="../reference/patina_ink_bleed.html">patina_ink_bleed()</a></code>. The first version ChatGPT provided
 didn’t do much:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">peng_p</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">4</span>, height<span class="op">=</span><span class="fl">3</span>, dpi <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/patina_ink_bleed.html">patina_ink_bleed</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">peng_p</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">2.5</span>, height<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/patina_ink_bleed.html">patina_ink_bleed</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vibe_files/figure-html/unnamed-chunk-7-1.png" width="65%" style="display: block; margin: auto;"></p>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
