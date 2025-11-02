@@ -125,7 +125,7 @@ advancements in generative code quality and further improvement on the
 Thinking feature that had been introduced in the previous generation. I
 <a href="https://www.infoworld.com/article/3844363/why-ai-generated-code-isnt-good-enough-and-how-it-will-get-better.html" class="external-link">am
 fully skeptical</a> of the code produced by these tools, but I also
-enjoy using ChatGPR for brainstorming so I wanted to give this model a
+enjoy using ChatGPT for brainstorming so I wanted to give this model a
 go.</p>
 </div>
 <div class="section level2">
@@ -217,9 +217,12 @@ didn’t do much:</p>
 message: “This code doesn’t seem to have any effect” along with the
 function. It rewrote the compositing logic—building a proper mask from
 dark ink, expanding and feathering it, then using that as an alpha
-channel for a colored bleed layer that multiplies over the plot. Much
-better. This became the debugging pattern: test the function, report
-what’s not working, get a refined version.</p>
+channel for a colored bleed layer that multiplies over the plot.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">peng_p</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">2.5</span>, height<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/patina_ink_bleed.html">patina_ink_bleed</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="vibe_files/figure-html/unnamed-chunk-9-1.png" width="65%" style="display: block; margin: auto;"></p>
+<p>Much better. This became the debugging pattern: test the function,
+report what’s not working, get a refined version.</p>
 </div>
 <div class="section level2">
 <h2 id="the-font-problem">The Font Problem<a class="anchor" aria-label="anchor" href="#the-font-problem"></a>
@@ -245,7 +248,7 @@ and off, I asked: <em>“Can you use withr to use that setting without
 changing it globally once the plot is rendered?”</em></p>
 <p>That was the breakthrough. The final solution uses
 <code><a href="https://withr.r-lib.org/reference/defer.html" class="external-link">withr::defer()</a></code> to create scoped wrappers:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">with_showtext_auto</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">expr</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/defer.html" class="external-link">defer</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>    <span class="fu">showtext</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_auto.html" class="external-link">showtext_auto</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></span>
@@ -257,6 +260,9 @@ changing it globally once the plot is rendered?”</em></p>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Now <code><a href="../reference/print_st.html">print_st()</a></code> and <code><a href="../reference/ggsave_st.html">ggsave_st()</a></code> enable
 showtext just for a single operation. No global state changes.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">{</span><span class="va">peng_p</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_newspaper.html">theme_newspaper</a></span><span class="op">(</span><span class="op">)</span> <span class="op">}</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/apply_period_fonts.html">apply_period_fonts</a></span><span class="op">(</span>era<span class="op">=</span><span class="st">"typewriter-1950s"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">2.5</span>, height<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p><img src="vibe_files/figure-html/unnamed-chunk-11-1.png" width="65%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="the-hand-drawn-wobble-saga">The Hand-Drawn Wobble Saga<a class="anchor" aria-label="anchor" href="#the-hand-drawn-wobble-saga"></a>
@@ -290,7 +296,7 @@ keeping titles crisp—a key feature for figures where you want hand-drawn
 data but professional annotation. That required measuring the actual
 panel viewport bounds from the ggplot layout. The solution turned out to
 be quite clever:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">panel_mask_from_plot</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">p</span>, <span class="va">width</span>, <span class="va">height</span>, <span class="va">dpi</span>, <span class="va">feather</span> <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>                                 <span class="va">expand_px</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0L</span>, <span class="fl">0L</span><span class="op">)</span>, <span class="va">include_axes</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="co"># 1. Render plot to ragg device at exact target size</span></span>
@@ -306,6 +312,9 @@ thought it was calculating from the edge, but I realized it’s not.”</em>
 The coordinate system math was completely wrong. Once corrected with the
 debugging output I provided, it worked beautifully—precise panel
 targeting with smooth edge feathering.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">peng_p</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">2.5</span>, height<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/hand_drawn_wiggle.html">hand_drawn_wiggle</a></span><span class="op">(</span>strength <span class="op">=</span> <span class="fl">0.85</span><span class="op">)</span></span></code></pre></div>
+<p><img src="vibe_files/figure-html/unnamed-chunk-13-1.png" width="65%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="more-effects-more-tuning">More Effects, More Tuning<a class="anchor" aria-label="anchor" href="#more-effects-more-tuning"></a>
@@ -331,6 +340,9 @@ sepia function doesn’t exist.”</em> It immediately rewrote using
 <code><a href="https://docs.ropensci.org/magick/reference/color.html" class="external-link">image_colorize()</a></code> with manual sepia calculations. These
 hallucinations happened regularly—it would use functions that don’t
 exist, then course-correct when caught.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">{</span><span class="va">peng_p</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_edu_film.html">theme_edu_film</a></span><span class="op">(</span><span class="op">)</span><span class="op">}</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">2.5</span>, height<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/animate_edu_film.html">animate_edu_film</a></span><span class="op">(</span>n_frames<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<p><img src="vibe_files/figure-html/unnamed-chunk-14-1.gif" width="65%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="aesthetic-judgment">Aesthetic Judgment<a class="anchor" aria-label="anchor" href="#aesthetic-judgment"></a>
