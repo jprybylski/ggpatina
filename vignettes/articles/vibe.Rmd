@@ -41,7 +41,7 @@ Edward Tufte's books are rich with examples of what I'm referencing (at least in
 
 The point is that plots with this appearance seem like they meant something to someone at some point that it motivated them to capture it and collect it. While a small visual effect will not imbue a plot with that authentic and candid backstory, it can be fun to give a trivial plot the appearance of that importance.
 
-My admiration for this style of plot was on my mind when OpenAI rolled out its current-newest ChatGPT model 5, which claimed substantial advancements in generative code quality and further improvement on the Thinking feature that had been introduced in the previous generation. I [am fully skeptical](https://www.infoworld.com/article/3844363/why-ai-generated-code-isnt-good-enough-and-how-it-will-get-better.html) of the code produced by these tools, but I also enjoy using ChatGPR for brainstorming so I wanted to give this model a go.
+My admiration for this style of plot was on my mind when OpenAI rolled out its current-newest ChatGPT model 5, which claimed substantial advancements in generative code quality and further improvement on the Thinking feature that had been introduced in the previous generation. I [am fully skeptical](https://www.infoworld.com/article/3844363/why-ai-generated-code-isnt-good-enough-and-how-it-will-get-better.html) of the code produced by these tools, but I also enjoy using ChatGPT for brainstorming so I wanted to give this model a go.
 
 ## Development
 
@@ -119,7 +119,16 @@ patina_ink_bleed <- function(img, radius = 2, strength = 0.5, bleed_color = "#2a
 peng_p |> as_magick(width = 2.5, height=2) |> patina_ink_bleed()
 ```
 
-Not great. The bleed effect was getting hidden. I sent ChatGPT a message: "This code doesn't seem to have any effect" along with the function. It rewrote the compositing logic—building a proper mask from dark ink, expanding and feathering it, then using that as an alpha channel for a colored bleed layer that multiplies over the plot. Much better. This became the debugging pattern: test the function, report what's not working, get a refined version.
+Not great. The bleed effect was getting hidden. I sent ChatGPT a message: "This code doesn't seem to have any effect" along with the function. It rewrote the compositing logic—building a proper mask from dark ink, expanding and feathering it, then using that as an alpha channel for a colored bleed layer that multiplies over the plot. 
+
+```{r, echo=FALSE}
+rm(patina_ink_bleed)
+```
+```{r, message=FALSE, warning=FALSE, fig.align="center", out.width="65%"}
+peng_p |> as_magick(width = 2.5, height=2) |> patina_ink_bleed()
+```
+
+Much better. This became the debugging pattern: test the function, report what's not working, get a refined version.
 
 ## The Font Problem
 
@@ -144,6 +153,10 @@ with_showtext_auto <- function(expr) {
 ```
 
 Now `print_st()` and `ggsave_st()` enable showtext just for a single operation. No global state changes.
+
+```{r, message=FALSE, warning=FALSE, fig.align="center", out.width="65%"}
+{peng_p + theme_newspaper() } |> apply_period_fonts(era="typewriter-1950s") |> as_magick(width = 2.5, height=2)
+```
 
 ## The Hand-Drawn Wobble Saga
 
@@ -173,6 +186,10 @@ panel_mask_from_plot <- function(p, width, height, dpi, feather = 10,
 
 Debugging the bounding box calculation was tedious. At one point I had to report: *"Now I see the bounding box and it's way off. I thought it was calculating from the edge, but I realized it's not."* The coordinate system math was completely wrong. Once corrected with the debugging output I provided, it worked beautifully—precise panel targeting with smooth edge feathering.
 
+```{r, message=FALSE, warning=FALSE, fig.align="center", out.width="65%"}
+peng_p |> as_magick(width = 2.5, height=2) |> hand_drawn_wiggle(strength = 0.85)
+```
+
 ## More Effects, More Tuning
 
 With the infrastructure solid, I asked for more presets: *"old newspaper; an old newscast; an old educational film."* These came together faster since the magick operation patterns were established.
@@ -182,6 +199,10 @@ But each needed visual refinement. The newspaper halftone was *"really hard to s
 The journal scan had *"a weird gray band on top"*—the scanner shadow was compositing over the title instead of looking like it was behind the content. The fix involved extending the canvas upward, drawing the shadow in a top margin, then rotating the entire page so the shadow rotates with it.
 
 One typical bug I caught: ChatGPT confidently wrote `magick::image_sepia_tone()`. I reported: *"the magick sepia function doesn't exist."* It immediately rewrote using `image_colorize()` with manual sepia calculations. These hallucinations happened regularly—it would use functions that don't exist, then course-correct when caught.
+
+```{r, message=FALSE, warning=FALSE, fig.align="center", out.width="65%"}
+{peng_p + theme_edu_film()} |> as_magick(width = 2.5, height=2) |> animate_edu_film()
+```
 
 ## Aesthetic Judgment
 
