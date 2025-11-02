@@ -66,11 +66,8 @@
     
     
 <div class="section level2">
-<h2 id="wip">(WIP)<a class="anchor" aria-label="anchor" href="#wip"></a>
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<div class="section level3">
-<h3 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
-</h3>
 <p>This package was developed using <a href="https://en.wikipedia.org/wiki/Vibe_coding" class="external-link">vibe coding</a>. While
 there are many approaches to building a package using AI, because this
 started as a basic “is this possible?” question to ChatGPT’s new
@@ -89,9 +86,9 @@ I was seeking. I wouldn’t consider this project an endorsement of AI or
 coding, but as a tinkerer I can’t resist trying a new (or improved)
 tool.</p>
 </div>
-<div class="section level3">
-<h3 id="inception">Inception<a class="anchor" aria-label="anchor" href="#inception"></a>
-</h3>
+<div class="section level2">
+<h2 id="inception">Inception<a class="anchor" aria-label="anchor" href="#inception"></a>
+</h2>
 <p>I have always been a fan of how screenshots or scanned figures from
 old journals looked. Or how plots look after someone uses an image they
 took of of slide containing that plot elsewhere (<a href="https://www.mrowe.co.za/blog/2023/08/a-few-thoughts-on-taking-photos-of-slides-at-conferences/" class="external-link">speaking
@@ -131,9 +128,9 @@ fully skeptical</a> of the code produced by these tools, but I also
 enjoy using ChatGPR for brainstorming so I wanted to give this model a
 go.</p>
 </div>
-<div class="section level3">
-<h3 id="development">Development<a class="anchor" aria-label="anchor" href="#development"></a>
-</h3>
+<div class="section level2">
+<h2 id="development">Development<a class="anchor" aria-label="anchor" href="#development"></a>
+</h2>
 <p>It started with a question that had an obvious answer:</p>
 <blockquote>
 <p>Is it possible to develop an R package that takes ggplot grobs and
@@ -193,9 +190,9 @@ ggpatina.zip
 </p>
 </div>
 </div>
-<div class="section level3">
-<h3 id="refinement">Refinement<a class="anchor" aria-label="anchor" href="#refinement"></a>
-</h3>
+<div class="section level2">
+<h2 id="refinement">Refinement<a class="anchor" aria-label="anchor" href="#refinement"></a>
+</h2>
 <p>As much as I love the <em>Motor Trends</em> analysis of 32 cars
 released from 1972-1974, I’ll go ahead and use <code>penguins</code> for
 this section. Just to switch it up.</p>
@@ -216,7 +213,200 @@ didn’t do much:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">peng_p</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/as_magick.html">as_magick</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">2.5</span>, height<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/patina_ink_bleed.html">patina_ink_bleed</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vibe_files/figure-html/unnamed-chunk-7-1.png" width="65%" style="display: block; margin: auto;"></p>
+<p>Not great. The bleed effect was getting hidden. I sent ChatGPT a
+message: “This code doesn’t seem to have any effect” along with the
+function. It rewrote the compositing logic—building a proper mask from
+dark ink, expanding and feathering it, then using that as an alpha
+channel for a colored bleed layer that multiplies over the plot. Much
+better. This became the debugging pattern: test the function, report
+what’s not working, get a refined version.</p>
 </div>
+<div class="section level2">
+<h2 id="the-font-problem">The Font Problem<a class="anchor" aria-label="anchor" href="#the-font-problem"></a>
+</h2>
+<p>The period fonts system turned into its own adventure. First attempt
+with the journal-1960s era gave me an error: <em>“Crimson Pro is not
+available, using sans instead.”</em> I had
+<code>install_if_missing</code> set to TRUE, so something was clearly
+wrong.</p>
+<p>The issue: <code><a href="https://systemfonts.r-lib.org/reference/match_fonts.html" class="external-link">systemfonts::match_font()</a></code> can’t see fonts
+registered via sysfonts/showtext—it only checks system-installed fonts.
+ChatGPT kept trying to validate fonts existed before registering them,
+which created a circular problem. I pushed it to just register the fonts
+through Google Fonts and trust they’d be available. That required using
+safe aliases (<code>crimson_pro</code> instead of
+<code>"Crimson Pro"</code>) and skipping the validation step
+entirely.</p>
+<p>That fixed font registration, but revealed a bigger problem: the
+function was enabling <code>showtext_auto()</code> globally, which
+affected <em>every</em> subsequent plot in my R session. Not acceptable.
+After several iterations where ChatGPT suggested toggling showtext on
+and off, I asked: <em>“Can you use withr to use that setting without
+changing it globally once the plot is rendered?”</em></p>
+<p>That was the breakthrough. The final solution uses
+<code><a href="https://withr.r-lib.org/reference/defer.html" class="external-link">withr::defer()</a></code> to create scoped wrappers:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">with_showtext_auto</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">expr</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/defer.html" class="external-link">defer</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="fu">showtext</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_auto.html" class="external-link">showtext_auto</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span>    <span class="fu">showtext</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_opts.html" class="external-link">showtext_opts</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>, <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu">showtext</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_auto.html" class="external-link">showtext_auto</a></span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="fu">showtext</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_opts.html" class="external-link">showtext_opts</a></span><span class="op">(</span>dpi <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/force.html" class="external-link">force</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Now <code><a href="../reference/print_st.html">print_st()</a></code> and <code><a href="../reference/ggsave_st.html">ggsave_st()</a></code> enable
+showtext just for a single operation. No global state changes.</p>
+</div>
+<div class="section level2">
+<h2 id="the-hand-drawn-wobble-saga">The Hand-Drawn Wobble Saga<a class="anchor" aria-label="anchor" href="#the-hand-drawn-wobble-saga"></a>
+</h2>
+<p>The hand-drawn wiggle effect went through the most iterations.
+ChatGPT’s initial approach: render the plot as SVG, apply an
+<code>feTurbulence</code> displacement filter, then rasterize.
+Conceptually elegant. In practice, a debugging nightmare.</p>
+<p>First issue I reported: <em>“all theme info and fonts for the text is
+lost when I leave affect_text=TRUE on.”</em> The SVG filter was wrapping
+the <code>&lt;style&gt;</code> block inside a filtered group, which
+librsvg ignores. That got fixed, but then I discovered fonts registered
+via showtext weren’t available to the SVG renderer anyway—it only sees
+system-installed fonts.</p>
+<p>The next solution split the rendering: warp shapes via SVG
+displacement, render text separately with ragg (which respects showtext
+fonts), then composite the layers. This mostly worked, except I noticed
+<em>“there is a weirdly large margin added to the text
+elements.”</em></p>
+<p>We went through multiple debugging rounds trying to fix filter
+regions, viewBox settings, and edge masking. Nothing worked
+consistently. I finally said: <em>“Perhaps we need to rethink the whole
+approach… Can you try instead to rewrite the whole functionality to just
+be a post-processing filter?”</em></p>
+<p>The rewrite simplified everything: pure raster displacement. Render
+the full plot with ragg, generate a 2-channel displacement map from
+Gaussian noise, apply it using magick’s <code>displace</code> operator.
+Much simpler. Actually worked.</p>
+<p>But I still wanted the ability to wobble just the plot panel while
+keeping titles crisp—a key feature for figures where you want hand-drawn
+data but professional annotation. That required measuring the actual
+panel viewport bounds from the ggplot layout. The solution turned out to
+be quite clever:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">panel_mask_from_plot</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">p</span>, <span class="va">width</span>, <span class="va">height</span>, <span class="va">dpi</span>, <span class="va">feather</span> <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>                                 <span class="va">expand_px</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0L</span>, <span class="fl">0L</span><span class="op">)</span>, <span class="va">include_axes</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># 1. Render plot to ragg device at exact target size</span></span>
+<span>  <span class="co"># 2. Call grid.force() to materialize all viewports</span></span>
+<span>  <span class="co"># 3. Use grid.ls() to find viewports with "panel" or "axis" in names</span></span>
+<span>  <span class="co"># 4. Convert NPC coordinates to device pixels via grid::deviceLoc()</span></span>
+<span>  <span class="co"># 5. Union all panel/axis boxes into single bounding box</span></span>
+<span>  <span class="co"># 6. Add feathering and return magick mask</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Debugging the bounding box calculation was tedious. At one point I
+had to report: <em>“Now I see the bounding box and it’s way off. I
+thought it was calculating from the edge, but I realized it’s not.”</em>
+The coordinate system math was completely wrong. Once corrected with the
+debugging output I provided, it worked beautifully—precise panel
+targeting with smooth edge feathering.</p>
+</div>
+<div class="section level2">
+<h2 id="more-effects-more-tuning">More Effects, More Tuning<a class="anchor" aria-label="anchor" href="#more-effects-more-tuning"></a>
+</h2>
+<p>With the infrastructure solid, I asked for more presets: <em>“old
+newspaper; an old newscast; an old educational film.”</em> These came
+together faster since the magick operation patterns were
+established.</p>
+<p>But each needed visual refinement. The newspaper halftone was
+<em>“really hard to see”</em> with default settings—I asked for
+adjustable parameters to control the effect strength. The photocopy was
+<em>“too washed out”</em>—we added <code>ghost_opacity</code> and
+<code>protect_lines</code> parameters to control how much the effect
+washes out versus re-inks the strokes.</p>
+<p>The journal scan had <em>“a weird gray band on top”</em>—the scanner
+shadow was compositing over the title instead of looking like it was
+behind the content. The fix involved extending the canvas upward,
+drawing the shadow in a top margin, then rotating the entire page so the
+shadow rotates with it.</p>
+<p>One typical bug I caught: ChatGPT confidently wrote
+<code>magick::image_sepia_tone()</code>. I reported: <em>“the magick
+sepia function doesn’t exist.”</em> It immediately rewrote using
+<code><a href="https://docs.ropensci.org/magick/reference/color.html" class="external-link">image_colorize()</a></code> with manual sepia calculations. These
+hallucinations happened regularly—it would use functions that don’t
+exist, then course-correct when caught.</p>
+</div>
+<div class="section level2">
+<h2 id="aesthetic-judgment">Aesthetic Judgment<a class="anchor" aria-label="anchor" href="#aesthetic-judgment"></a>
+</h2>
+<p>ChatGPT fundamentally can’t make visual design decisions. When the
+transparency slide light leak was <em>“taking away from the plot image
+too much,”</em> I had to tell it specifically to favor the original
+image in the blend. When Kodachrome warmth was too subtle, I specified
+stronger colorization values. When CRT scanlines were invisible at small
+sizes, I adjusted the <code>scan_strength</code> parameter until they
+were visible but not overwhelming.</p>
+<p>Every effect went through this visual tuning loop. ChatGPT would
+generate something technically correct but aesthetically wrong. I’d test
+it, describe what I was seeing (<em>“too washed out”</em>, <em>“barely
+noticeable”</em>, <em>“weird margin”</em>), and request specific
+changes. It would adjust the underlying magick operations accordingly.
+This worked because I could articulate the visual problem and it could
+translate that into parameter adjustments.</p>
+</div>
+<div class="section level2">
+<h2 id="themes-and-documentation">Themes and Documentation<a class="anchor" aria-label="anchor" href="#themes-and-documentation"></a>
+</h2>
+<p>The journal themes (1900s, 1930s, 1960s) came together quickly once
+ChatGPT learned not to use <code>%+replace%</code> (which causes cryptic
+ggplot2 errors) and to avoid touching user-specified text sizes.</p>
+<p>For the README, ChatGPT initially wanted extensive documentation. I
+kept pushing back: <em>“I would like a simple readme.Rmd… simpler than
+the version you provided earlier.”</em> We iterated until it hit the
+right tone—concise, example-focused, grab-and-go code snippets rather
+than lengthy explanations.</p>
+</div>
+<div class="section level2">
+<h2 id="final-thoughts">Final Thoughts<a class="anchor" aria-label="anchor" href="#final-thoughts"></a>
+</h2>
+<p>Total time investment: maybe 3-4 hours spread across several sessions
+of prompting, testing, and iteration. ChatGPT wrote approximately 95% of
+the code by line count. I provided 100% of the direction, quality
+control, and aesthetic judgment.</p>
+<p><strong>What ChatGPT was good at:</strong></p>
+<ul>
+<li>Generating boilerplate (roxygen documentation, package structure,
+utility functions)</li>
+<li>Implementing well-defined image operations when I described the
+desired visual effect</li>
+<li>Refactoring code when I pointed out architectural problems</li>
+<li>Debugging specific errors when I provided clear error messages</li>
+</ul>
+<p><strong>What it was terrible at:</strong></p>
+<ul>
+<li>Anticipating edge cases or subtle rendering bugs</li>
+<li>Knowing which magick/ggplot2 functions actually exist versus
+hallucinating them</li>
+<li>Understanding R’s graphics system (grid, viewports, coordinate
+systems) without detailed guidance</li>
+<li>Making visual or aesthetic design decisions</li>
+<li>Avoiding unnecessary complexity</li>
+</ul>
+<p>The key to making this collaboration work: rapid iteration with
+immediate testing. I tested each function as soon as it was written,
+identified exactly what broke or looked wrong, and described the problem
+precisely. ChatGPT would apply a fix. If that didn’t work, I’d give it
+one more round, then suggest a completely different approach if
+needed.</p>
+<p>Would I use this workflow for production software that needs to be
+reliable and maintainable? Maybe. For an experimental package exploring
+a niche aesthetic idea that I wouldn’t have bothered coding manually?
+Definitely. The boundaries were clear: I provided vision, taste, and
+verification. ChatGPT provided implementation speed and tireless
+iteration.</p>
+<p>When it struggled with the viewport measurement debugging, working
+through it step-by-step felt oddly like teaching. Even AI apparently
+needs to learn that R’s graphics system is wonderfully arcane.</p>
+<p>The result isn’t life-changing software, but it’s a functional,
+documented package that scratches a specific aesthetic itch I’ve had for
+years about old journal figures and vintage media. For a few hours of
+prompting and testing, that’s more than enough.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
