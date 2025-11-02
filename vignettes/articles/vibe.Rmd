@@ -201,7 +201,7 @@ The journal scan had *"a weird gray band on top"*—the scanner shadow was compo
 One typical bug I caught: ChatGPT confidently wrote `magick::image_sepia_tone()`. I reported: *"the magick sepia function doesn't exist."* It immediately rewrote using `image_colorize()` with manual sepia calculations. These hallucinations happened regularly—it would use functions that don't exist, then course-correct when caught.
 
 ```{r, message=FALSE, warning=FALSE, fig.align="center", out.width="65%"}
-{peng_p + theme_edu_film()} |> as_magick(width = 2.5, height=2) |> animate_edu_film()
+{peng_p + theme_edu_film()} |> as_magick(width = 2.5, height=2) |> animate_edu_film(n_frames=5)
 ```
 
 ## Aesthetic Judgment
