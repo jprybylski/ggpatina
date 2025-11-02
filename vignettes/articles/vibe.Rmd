@@ -14,7 +14,6 @@ library(ggpatina)
 library(ggplot2)
 ```
 
-# (WIP)
 
 ## Introduction
 
@@ -120,3 +119,105 @@ patina_ink_bleed <- function(img, radius = 2, strength = 0.5, bleed_color = "#2a
 peng_p |> as_magick(width = 2.5, height=2) |> patina_ink_bleed()
 ```
 
+Not great. The bleed effect was getting hidden. I sent ChatGPT a message: "This code doesn't seem to have any effect" along with the function. It rewrote the compositing logic—building a proper mask from dark ink, expanding and feathering it, then using that as an alpha channel for a colored bleed layer that multiplies over the plot. Much better. This became the debugging pattern: test the function, report what's not working, get a refined version.
+
+## The Font Problem
+
+The period fonts system turned into its own adventure. First attempt with the journal-1960s era gave me an error: *"Crimson Pro is not available, using sans instead."* I had `install_if_missing` set to TRUE, so something was clearly wrong.
+
+The issue: `systemfonts::match_font()` can't see fonts registered via sysfonts/showtext—it only checks system-installed fonts. ChatGPT kept trying to validate fonts existed before registering them, which created a circular problem. I pushed it to just register the fonts through Google Fonts and trust they'd be available. That required using safe aliases (`crimson_pro` instead of `"Crimson Pro"`) and skipping the validation step entirely.
+
+That fixed font registration, but revealed a bigger problem: the function was enabling `showtext_auto()` globally, which affected *every* subsequent plot in my R session. Not acceptable. After several iterations where ChatGPT suggested toggling showtext on and off, I asked: *"Can you use withr to use that setting without changing it globally once the plot is rendered?"*
+
+That was the breakthrough. The final solution uses `withr::defer()` to create scoped wrappers:
+
+```{r, eval=FALSE}
+with_showtext_auto <- function(expr) {
+  withr::defer({
+    showtext::showtext_auto(FALSE)
+    showtext::showtext_opts()
+  }, parent.frame())
+  showtext::showtext_auto(TRUE)
+  showtext::showtext_opts(dpi = 300)
+  force(expr)
+}
+```
+
+Now `print_st()` and `ggsave_st()` enable showtext just for a single operation. No global state changes.
+
+## The Hand-Drawn Wobble Saga
+
+The hand-drawn wiggle effect went through the most iterations. ChatGPT's initial approach: render the plot as SVG, apply an `feTurbulence` displacement filter, then rasterize. Conceptually elegant. In practice, a debugging nightmare.
+
+First issue I reported: *"all theme info and fonts for the text is lost when I leave affect_text=TRUE on."* The SVG filter was wrapping the `<style>` block inside a filtered group, which librsvg ignores. That got fixed, but then I discovered fonts registered via showtext weren't available to the SVG renderer anyway—it only sees system-installed fonts.
+
+The next solution split the rendering: warp shapes via SVG displacement, render text separately with ragg (which respects showtext fonts), then composite the layers. This mostly worked, except I noticed *"there is a weirdly large margin added to the text elements."*
+
+We went through multiple debugging rounds trying to fix filter regions, viewBox settings, and edge masking. Nothing worked consistently. I finally said: *"Perhaps we need to rethink the whole approach... Can you try instead to rewrite the whole functionality to just be a post-processing filter?"*
+
+The rewrite simplified everything: pure raster displacement. Render the full plot with ragg, generate a 2-channel displacement map from Gaussian noise, apply it using magick's `displace` operator. Much simpler. Actually worked.
+
+But I still wanted the ability to wobble just the plot panel while keeping titles crisp—a key feature for figures where you want hand-drawn data but professional annotation. That required measuring the actual panel viewport bounds from the ggplot layout. The solution turned out to be quite clever:
+
+```{r, eval=FALSE}
+panel_mask_from_plot <- function(p, width, height, dpi, feather = 10,
+                                 expand_px = c(0L, 0L), include_axes = TRUE, ...) {
+  # 1. Render plot to ragg device at exact target size
+  # 2. Call grid.force() to materialize all viewports
+  # 3. Use grid.ls() to find viewports with "panel" or "axis" in names
+  # 4. Convert NPC coordinates to device pixels via grid::deviceLoc()
+  # 5. Union all panel/axis boxes into single bounding box
+  # 6. Add feathering and return magick mask
+}
+```
+
+Debugging the bounding box calculation was tedious. At one point I had to report: *"Now I see the bounding box and it's way off. I thought it was calculating from the edge, but I realized it's not."* The coordinate system math was completely wrong. Once corrected with the debugging output I provided, it worked beautifully—precise panel targeting with smooth edge feathering.
+
+## More Effects, More Tuning
+
+With the infrastructure solid, I asked for more presets: *"old newspaper; an old newscast; an old educational film."* These came together faster since the magick operation patterns were established.
+
+But each needed visual refinement. The newspaper halftone was *"really hard to see"* with default settings—I asked for adjustable parameters to control the effect strength. The photocopy was *"too washed out"*—we added `ghost_opacity` and `protect_lines` parameters to control how much the effect washes out versus re-inks the strokes.
+
+The journal scan had *"a weird gray band on top"*—the scanner shadow was compositing over the title instead of looking like it was behind the content. The fix involved extending the canvas upward, drawing the shadow in a top margin, then rotating the entire page so the shadow rotates with it.
+
+One typical bug I caught: ChatGPT confidently wrote `magick::image_sepia_tone()`. I reported: *"the magick sepia function doesn't exist."* It immediately rewrote using `image_colorize()` with manual sepia calculations. These hallucinations happened regularly—it would use functions that don't exist, then course-correct when caught.
+
+## Aesthetic Judgment
+
+ChatGPT fundamentally can't make visual design decisions. When the transparency slide light leak was *"taking away from the plot image too much,"* I had to tell it specifically to favor the original image in the blend. When Kodachrome warmth was too subtle, I specified stronger colorization values. When CRT scanlines were invisible at small sizes, I adjusted the `scan_strength` parameter until they were visible but not overwhelming.
+
+Every effect went through this visual tuning loop. ChatGPT would generate something technically correct but aesthetically wrong. I'd test it, describe what I was seeing (*"too washed out"*, *"barely noticeable"*, *"weird margin"*), and request specific changes. It would adjust the underlying magick operations accordingly. This worked because I could articulate the visual problem and it could translate that into parameter adjustments.
+
+## Themes and Documentation
+
+The journal themes (1900s, 1930s, 1960s) came together quickly once ChatGPT learned not to use `%+replace%` (which causes cryptic ggplot2 errors) and to avoid touching user-specified text sizes.
+
+For the README, ChatGPT initially wanted extensive documentation. I kept pushing back: *"I would like a simple readme.Rmd... simpler than the version you provided earlier."* We iterated until it hit the right tone—concise, example-focused, grab-and-go code snippets rather than lengthy explanations.
+
+## Final Thoughts
+
+Total time investment: maybe 3-4 hours spread across several sessions of prompting, testing, and iteration. ChatGPT wrote approximately 95% of the code by line count. I provided 100% of the direction, quality control, and aesthetic judgment.
+
+**What ChatGPT was good at:**
+
+- Generating boilerplate (roxygen documentation, package structure, utility functions)
+- Implementing well-defined image operations when I described the desired visual effect
+- Refactoring code when I pointed out architectural problems
+- Debugging specific errors when I provided clear error messages
+
+**What it was terrible at:**
+
+- Anticipating edge cases or subtle rendering bugs
+- Knowing which magick/ggplot2 functions actually exist versus hallucinating them
+- Understanding R's graphics system (grid, viewports, coordinate systems) without detailed guidance
+- Making visual or aesthetic design decisions
+- Avoiding unnecessary complexity
+
+The key to making this collaboration work: rapid iteration with immediate testing. I tested each function as soon as it was written, identified exactly what broke or looked wrong, and described the problem precisely. ChatGPT would apply a fix. If that didn't work, I'd give it one more round, then suggest a completely different approach if needed.
+
+Would I use this workflow for production software that needs to be reliable and maintainable? Maybe. For an experimental package exploring a niche aesthetic idea that I wouldn't have bothered coding manually? Definitely. The boundaries were clear: I provided vision, taste, and verification. ChatGPT provided implementation speed and tireless iteration.
+
+When it struggled with the viewport measurement debugging, working through it step-by-step felt oddly like teaching. Even AI apparently needs to learn that R's graphics system is wonderfully arcane.
+
+The result isn't life-changing software, but it's a functional, documented package that scratches a specific aesthetic itch I've had for years about old journal figures and vintage media. For a few hours of prompting and testing, that's more than enough.
